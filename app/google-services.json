@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "420585915774",
+    "project_id": "ministry-app-f5b63",
+    "storage_bucket": "ministry-app-f5b63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420585915774:android:0184b6ac3938df26da5f2f",
+        "android_client_info": {
+          "package_name": "com.example.ministery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420585915774-on3omnsuu855fgkegu6m0qaubu2ecksd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ministery",
+            "certificate_hash": "0f5f4eab7da61018c1b9d9d75082afa689bef9f3"
+          }
+        },
+        {
+          "client_id": "420585915774-9lfq1jgffefeq1ja36m9ofeq6klp41n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh-5sWsrPlQHeEote-HujHXMyhZCbme9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420585915774-9lfq1jgffefeq1ja36m9ofeq6klp41n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
