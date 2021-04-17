@@ -42,7 +42,7 @@ public class Menu extends AppCompatActivity {
 
         //getSupportFragmentManager ().beginTransaction ().replace ( R.id.container,
           //      new Braille () ).commit ();
-            
+
 
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.ministery.Learn.Braille;
-import com.example.ministery.Profile.profile;
-
 public class SignUp extends AppCompatActivity {
 
     @Override
@@ -24,7 +21,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent menu= new Intent (getApplicationContext (), Menu.class);
+                Intent menu= new Intent (getApplicationContext (), MenuActivity.class);
                 startActivity ( menu );
 
             }
