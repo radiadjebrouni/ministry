@@ -4,9 +4,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.ministery.Learn.Braille;
-import com.example.ministery.Learn.Sign;
-
 public class market_adapter extends FragmentStatePagerAdapter {
     public market_adapter(FragmentManager fm) {
 

@@ -35,7 +35,7 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Sign extends Fragment {
+public class SignFragment extends Fragment {
     ArrayList<ImageView> alphabet = new ArrayList<> ();
     ImageButton mSpeakBtn ;
     public static final int REQ_CODE_SPEECH_INPUT = 100;

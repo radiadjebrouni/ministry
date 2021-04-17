@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.ministery.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class learn extends Fragment {
+public class learnFragment extends Fragment {
 
 
     learn_adapter learn_adapter;
@@ -41,9 +41,9 @@ public class learn extends Fragment {
         viewPager.setAdapter(learn_adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt ( 0 ).setText ("Braille" );
-        tabLayout.getTabAt ( 0 ).setIcon ( R.drawable.ic_braille );
+       // tabLayout.getTabAt ( 0 ).setIcon ( R.drawable.ic_braille );
         tabLayout.getTabAt ( 1).setText ( "Sign" );
-        tabLayout.getTabAt ( 1 ).setIcon ( R.drawable.ic_sign );
+        //tabLayout.getTabAt ( 1 ).setIcon ( R.drawable.ic_sign );
 
 
 

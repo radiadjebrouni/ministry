@@ -4,38 +4,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ToggleButton;
 
 
-import com.example.ministery.Fav.messaging;
-import com.example.ministery.Learn.learn;
-import com.example.ministery.Market.market;
-import com.example.ministery.Profile.profile;
+import com.example.ministery.Fav.FavoriteFragment;
+import com.example.ministery.Learn.learnFragment;
+import com.example.ministery.Market.MarketFragment;
+import com.example.ministery.Profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
 
 
-public class Menu extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_main );
+        setContentView ( R.layout.menu_activity );
 
         BottomNavigationView bottomNav = findViewById ( R.id.bottom_navigation );
         bottomNav.setOnNavigationItemSelectedListener ( navListener );
         if (savedInstanceState == null) {
             getSupportFragmentManager ().beginTransaction ().replace ( R.id.fragment_container,
-                    new profile () ).commit ();
+                    new ProfileFragment () ).commit ();
         }
 
 
@@ -52,16 +45,16 @@ public class Menu extends AppCompatActivity {
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.learn:
-                            selectedFragment = new learn ();
+                            selectedFragment = new learnFragment ();
                             break;
                         case R.id.profile:
-                            selectedFragment = new profile ();
+                            selectedFragment = new ProfileFragment ();
                             break;
                         case R.id.market:
-                            selectedFragment = new market ();
+                            selectedFragment = new MarketFragment ();
                             break;
                         case R.id.chat:
-                            selectedFragment = new messaging ();
+                            selectedFragment = new FavoriteFragment ();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

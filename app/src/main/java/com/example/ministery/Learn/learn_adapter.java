@@ -14,17 +14,17 @@ public class learn_adapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch (i){
             case 0:
-                Fragment fragment = new Braille ();
+                Fragment fragment = new BrailleFragment ();
 
                 return fragment;
 
             case 1:
-                Fragment f = new Sign () ;
+                Fragment f = new SignFragment () ;
 
                 return f;
 
         }
-        return new Braille ();
+        return new BrailleFragment ();
 
     }
 

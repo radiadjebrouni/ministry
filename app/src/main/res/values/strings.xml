@@ -5,6 +5,46 @@
     <string name="enter_password">enter password</string>
     <string name="sign_up">Sign up</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="besoin">Besoin</string>
+    <string name="offres">Offres</string>
+    <string name="description_audio">Description audio</string>
+    <string name="adresse_map">Adresse map</string>
+    <string name="profile">Profile</string>
+    <string name="enter_a_text_here_26_char_max">Enter a text here (26 char max)</string>
+    <string name="mes_articles">Mes articles</string>
+    <string name="appeler">Appeler</string>
+    <string name="propri_taire">Propriétaire</string>
+    <string name="service">Service</string>
+    <string name="nom_hint">Nom</string>
+    <string name="type_hint">Type</string>
+    <string name="prix_hint">Prix</string>
+    <string name="wilaya_hint">Wilaya</string>
+    <string name="description_hint">Description :</string>
+    <string name="confirmer_ajout">Confirmer</string>
+    <string name="entrer_une_photo">Entrer une photo</string>
+    <string name="entrer_photo_in_dialog">Entrer une photo!</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="gallery">Choose from Gallery</string>
+    <string name="cancel_adding_photo">Cancel</string>
+    <string name="mes_enregistrement">Mes enregistrement</string>
+    <string name="commencer">Commencer</string>
+    <string name="entrer_adresse">Entrer adresse</string>
+
+
+    <string-array name="types_handicapes">
+        <item>tout</item>
+        <item>auditif</item>
+        <item>visuel</item>
+        <item>moteur</item>
+        <item>Autisme </item>
+        <item>Handicap Psychique</item>
+        <item>Plurihandicap</item>
+        <item>Polyhandicap</item>
+        <item>Traumatismes crâniens</item>
+        <item>Maladies dégénératives</item>
+        <item>Les troubles dys</item>
+        <item>Polyhandicap</item>
+    </string-array>
 </resources>

@@ -11,8 +11,8 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
-public class TTS extends AppCompatActivity {
-    private TextToSpeech mTTS;
+public class TexttoSpeech extends AppCompatActivity {
+    private android.speech.tts.TextToSpeech mTTS;
     private EditText mEditText;
     private SeekBar mSeekBarPitch;
     private SeekBar mSeekBarSpeed;
@@ -22,13 +22,14 @@ public class TTS extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tts);
         mButtonSpeak = findViewById(R.id.button_speak);
-        mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+        mTTS = new android.speech.tts.TextToSpeech (this, new android.speech.tts.TextToSpeech.OnInitListener () {
             @Override
             public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
+                if (status == android.speech.tts.TextToSpeech.SUCCESS) {
+
                     int result = mTTS.setLanguage(Locale.FRENCH);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    if (result == android.speech.tts.TextToSpeech.LANG_MISSING_DATA
+                            || result == android.speech.tts.TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "Language not supported");
                     } else {
                         mButtonSpeak.setEnabled(true);
@@ -56,7 +57,7 @@ public class TTS extends AppCompatActivity {
         if (speed < 0.1) speed = 0.1f;
         mTTS.setPitch(pitch);
         mTTS.setSpeechRate(speed);
-        mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        mTTS.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null);
     }
     @Override
     protected void onDestroy() {

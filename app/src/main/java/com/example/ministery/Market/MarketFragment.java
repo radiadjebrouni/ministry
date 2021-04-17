@@ -14,7 +14,7 @@ import com.example.ministery.Learn.learn_adapter;
 import com.example.ministery.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class market  extends Fragment {
+public class MarketFragment extends Fragment {
 
 
     market_adapter market_adapter;
@@ -41,10 +41,10 @@ public class market  extends Fragment {
         viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(market_adapter);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt ( 0 ).setText ("Braille" );
-        tabLayout.getTabAt ( 0 ).setIcon ( R.drawable.ic_braille );
-        tabLayout.getTabAt ( 1).setText ( "Sign" );
-        tabLayout.getTabAt ( 1 ).setIcon ( R.drawable.ic_sign );
+        tabLayout.getTabAt ( 0 ).setText (getString( R.string.besoin) );
+      //  tabLayout.getTabAt ( 0 ).setIcon ( R.drawable.ic_braille );
+        tabLayout.getTabAt ( 1).setText ( getString( R.string.offres) );
+       // tabLayout.getTabAt ( 1 ).setIcon ( R.drawable.ic_sign );
 
 
 
