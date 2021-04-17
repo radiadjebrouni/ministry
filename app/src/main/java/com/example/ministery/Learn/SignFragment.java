@@ -35,7 +35,7 @@ import java.util.Locale;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Braille extends Fragment {
+public class SignFragment extends Fragment {
     ArrayList<ImageView> alphabet = new ArrayList<> ();
     ImageButton mSpeakBtn ;
     public static final int REQ_CODE_SPEECH_INPUT = 100;
@@ -52,11 +52,11 @@ public class Braille extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v= inflater.inflate( R.layout.braille, container, false);
+        final View v= inflater.inflate( R.layout.sign, container, false);
 
         srcTextView =v. findViewById ( R.id.sourceText );
         mSpeakBtn = v.findViewById ( R.id.mic );
-        targetSyncButton =v. findViewById(R.id.buttonSyncTarget);
+        targetSyncButton =v. findViewById(R.id.buttonSignTarget);
         targetSyncButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -127,82 +127,82 @@ public class Braille extends Fragment {
         alphabet.clear ();
 
         alphabet.add ( (ImageView) v.findViewById ( R.id.img1 ));
-        res = getResources ().getIdentifier ( "@drawable/a", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ea", null, getActivity ().getPackageName () );
         alphabet.get ( 0 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img2 ) );
-        res = getResources ().getIdentifier ( "@drawable/b", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eb", null, getActivity ().getPackageName () );
         alphabet.get ( 1 ).setImageResource ( res );
         alphabet.add ( (ImageView)v.findViewById ( R.id.img3 ) );
-        res = getResources ().getIdentifier ( "@drawable/c", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ec", null, getActivity ().getPackageName () );
         alphabet.get ( 2 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img4 ) );
-        res = getResources ().getIdentifier ( "@drawable/d", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ed", null, getActivity ().getPackageName () );
         alphabet.get ( 3 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img5 ) );
-        res = getResources ().getIdentifier ( "@drawable/e", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eee", null,getActivity (). getPackageName () );
         alphabet.get ( 4 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img6 ) );
-        res = getResources ().getIdentifier ( "@drawable/f", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ef", null, getActivity ().getPackageName () );
         alphabet.get ( 5 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img7 ) );
-        res = getResources ().getIdentifier ( "@drawable/g", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eg", null, getActivity ().getPackageName () );
         alphabet.get ( 6 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img8 ) );
-        res = getResources ().getIdentifier ( "@drawable/h", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eh", null, getActivity ().getPackageName () );
         alphabet.get ( 7 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img9 ) );
-        res = getResources ().getIdentifier ( "@drawable/i", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ei", null, getActivity ().getPackageName () );
         alphabet.get ( 8 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img10 ) );
-        res = getResources ().getIdentifier ( "@drawable/j", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ej", null, getActivity ().getPackageName () );
         alphabet.get ( 9 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img11 ) );
-        res = getResources ().getIdentifier ( "@drawable/k", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ek", null,getActivity (). getPackageName () );
         alphabet.get ( 10 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img12 ) );
-        res = getResources ().getIdentifier ( "@drawable/l", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/el", null,getActivity (). getPackageName () );
         alphabet.get ( 11).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img13 ) );
-        res = getResources ().getIdentifier ( "@drawable/m", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/em", null,getActivity (). getPackageName () );
         alphabet.get ( 12).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img14 ) );
-        res = getResources ().getIdentifier ( "@drawable/n", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/en", null, getActivity ().getPackageName () );
         alphabet.get ( 13).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img15 ) );
-        res = getResources ().getIdentifier ( "@drawable/o", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eo", null, getActivity ().getPackageName () );
         alphabet.get ( 14).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img16 ) );
-        res = getResources ().getIdentifier ( "@drawable/p", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ep", null, getActivity ().getPackageName () );
         alphabet.get ( 15 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img17 ) );
-        res = getResources ().getIdentifier ( "@drawable/q", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eq", null,getActivity (). getPackageName () );
         alphabet.get ( 16).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img18 ) );
-        res = getResources ().getIdentifier ( "@drawable/r",null, getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/er",null, getActivity (). getPackageName () );
         alphabet.get ( 17 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img19 ) );
-        res = getResources ().getIdentifier ( "@drawable/s", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/es", null,getActivity (). getPackageName () );
         alphabet.get ( 18 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img20 ) );
-        res = getResources ().getIdentifier ( "@drawable/t", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/et", null, getActivity ().getPackageName () );
         alphabet.get ( 19 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img21 ) );
-        res = getResources ().getIdentifier ( "@drawable/u", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/eu", null,getActivity (). getPackageName () );
         alphabet.get ( 20 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img22 ) );
-        res = getResources ().getIdentifier ( "@drawable/v", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ev", null,getActivity (). getPackageName () );
         alphabet.get ( 21 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img23 ) );
-        res = getResources ().getIdentifier ( "@drawable/w", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ew", null,getActivity (). getPackageName () );
         alphabet.get ( 22 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img24 ) );
-        res = getResources ().getIdentifier ( "@drawable/x", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ex", null, getActivity ().getPackageName () );
         alphabet.get ( 23 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img25 ) );
-        res = getResources ().getIdentifier ( "@drawable/y", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ey", null, getActivity ().getPackageName () );
         alphabet.get ( 24 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img26 ) );
-        res = getResources ().getIdentifier ( "@drawable/z", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ez", null,getActivity (). getPackageName () );
         alphabet.get ( 25 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img27 ) );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img28 ) );
@@ -231,7 +231,7 @@ public class Braille extends Fragment {
                     char c = s.charAt ( i );
                     switch (c) {
                         case 'a' :case 'A':
-                            res = getResources ().getIdentifier ( "@drawable/a", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ea", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -241,7 +241,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'b'  :case'B':
-                            res = getResources ().getIdentifier ( "@drawable/b", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eb", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -251,7 +251,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'c'  :case'C':
-                            res = getResources ().getIdentifier ( "@drawable/c", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ec", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -261,7 +261,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'd'  :case'D':
-                            res = getResources ().getIdentifier ( "@drawable/d", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ed", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -272,7 +272,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'e'  :case'E':
-                            res = getResources ().getIdentifier ( "@drawable/e", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eee", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -282,7 +282,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'f'  :case'F':
-                            res = getResources ().getIdentifier ( "@drawable/f", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ef", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -293,7 +293,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'G'  :case'g':
-                            res = getResources ().getIdentifier ( "@drawable/g", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eg", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -303,7 +303,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'h'  :case'H':
-                            res = getResources ().getIdentifier ( "@drawable/h", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eh", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -314,7 +314,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'i'  :case'I':
-                            res = getResources ().getIdentifier ( "@drawable/i", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ei", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -324,7 +324,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'j'  :case'J':
-                            res = getResources ().getIdentifier ( "@drawable/j", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ej", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -335,7 +335,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'k'  :case'K':
-                            res = getResources ().getIdentifier ( "@drawable/k", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ek", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -345,7 +345,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'l'  :case'L':
-                            res = getResources ().getIdentifier ( "@drawable/l", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/el", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -356,7 +356,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'm'  :case'M':
-                            res = getResources ().getIdentifier ( "@drawable/m", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/em", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -366,7 +366,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'n'  :case'N':
-                            res = getResources ().getIdentifier ( "@drawable/n", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/en", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -377,7 +377,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'o'  :case'O':
-                            res = getResources ().getIdentifier ( "@drawable/o", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eo", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -387,7 +387,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'p'  :case 'P':
-                            res = getResources ().getIdentifier ( "@drawable/p", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ep", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -398,7 +398,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'q'  :case'Q':
-                            res = getResources ().getIdentifier ( "@drawable/q", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eq", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -408,7 +408,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'r' :case'R':
-                            res = getResources ().getIdentifier ( "@drawable/r", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/er", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -419,7 +419,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 's'  :case'S':
-                            res = getResources ().getIdentifier ( "@drawable/s", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/es", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -429,7 +429,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 't' :case'T':
-                            res = getResources ().getIdentifier ( "@drawable/t", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/et", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -440,7 +440,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'u'  :case'U':
-                            res = getResources ().getIdentifier ( "@drawable/u", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/eu", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -450,7 +450,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'v'  :case'V':
-                            res = getResources ().getIdentifier ( "@drawable/v", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ev", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -473,7 +473,7 @@ public class Braille extends Fragment {
 
 
                         case 'x'  :case'X':
-                            res = getResources ().getIdentifier ( "@drawable/x", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ex", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -485,7 +485,7 @@ public class Braille extends Fragment {
 
 
                         case 'y' :case'Y':
-                            res = getResources ().getIdentifier ( "@drawable/y", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ey", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -496,7 +496,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'z'  :case'Z':
-                            res = getResources ().getIdentifier ( "@drawable/z", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ez", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -556,88 +556,88 @@ public class Braille extends Fragment {
 
 
         alphabet.add ( (ImageView) v.findViewById ( R.id.img7 ));
-        res = getResources ().getIdentifier ( "@drawable/aa", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/aaa", null, getActivity ().getPackageName () );
         alphabet.get ( 0 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img6 ) );
-        res = getResources ().getIdentifier ( "@drawable/bb", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ab", null, getActivity ().getPackageName () );
         alphabet.get ( 1 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img5 ) );
-        res = getResources ().getIdentifier ( "@drawable/cc", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ac", null,getActivity (). getPackageName () );
         alphabet.get ( 2 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img4 ) );
-        res = getResources ().getIdentifier ( "@drawable/dd", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ad", null,getActivity (). getPackageName () );
         alphabet.get ( 3 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img3 ) );
-        res = getResources ().getIdentifier ( "@drawable/ee", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ae", null,getActivity (). getPackageName () );
         alphabet.get ( 4 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img2 ) );
-        res = getResources ().getIdentifier ( "@drawable/ff", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/af", null, getActivity ().getPackageName () );
         alphabet.get ( 5 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img1 ) );
-        res = getResources ().getIdentifier ( "@drawable/gg", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ag", null, getActivity ().getPackageName () );
         alphabet.get ( 6 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img14 ) );
-        res = getResources ().getIdentifier ( "@drawable/hh", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ah", null, getActivity ().getPackageName () );
         alphabet.get ( 7 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img13) );
-        res = getResources ().getIdentifier ( "@drawable/ii", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ai", null,getActivity (). getPackageName () );
         alphabet.get ( 8 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img12) );
-        res = getResources ().getIdentifier ( "@drawable/jj", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/aj", null, getActivity ().getPackageName () );
         alphabet.get ( 9 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img11 ) );
-        res = getResources ().getIdentifier ( "@drawable/kk", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ak", null, getActivity ().getPackageName () );
         alphabet.get ( 10 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img10 ) );
-        res = getResources ().getIdentifier ( "@drawable/ll", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/al", null, getActivity ().getPackageName () );
         alphabet.get ( 11).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img9 ) );
-        res = getResources ().getIdentifier ( "@drawable/mm", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/am", null, getActivity ().getPackageName () );
         alphabet.get ( 12).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img8 ) );
-        res = getResources ().getIdentifier ( "@drawable/nn", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/an", null,getActivity (). getPackageName () );
         alphabet.get ( 13).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img21 ) );
-        res = getResources ().getIdentifier ( "@drawable/oo", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ao", null, getActivity ().getPackageName () );
         alphabet.get ( 14).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img20 ) );
-        res = getResources ().getIdentifier ( "@drawable/pp", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ap", null, getActivity ().getPackageName () );
         alphabet.get ( 15 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img19 ) );
-        res = getResources ().getIdentifier ( "@drawable/qq", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/aq", null,getActivity (). getPackageName () );
         alphabet.get ( 16).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img18 ) );
-        res = getResources ().getIdentifier ( "@drawable/rr", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ar", null, getActivity ().getPackageName () );
         alphabet.get ( 17 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img17 ) );
-        res = getResources ().getIdentifier ( "@drawable/ss", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/as", null,getActivity (). getPackageName () );
         alphabet.get ( 18 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img16 ) );
-        res = getResources ().getIdentifier ( "@drawable/tt", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/at", null,getActivity (). getPackageName () );
         alphabet.get ( 19 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img15 ) );
-        res = getResources ().getIdentifier ( "@drawable/uu", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/au", null,getActivity (). getPackageName () );
         alphabet.get ( 20 ).setImageResource ( res );
         alphabet.add ( (ImageView)v. findViewById ( R.id.img28 ) );
-        res = getResources ().getIdentifier ( "@drawable/vv", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/av", null, getActivity ().getPackageName () );
         alphabet.get ( 21 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img27 ) );
-        res = getResources ().getIdentifier ( "@drawable/ww", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/aw", null, getActivity ().getPackageName () );
         alphabet.get ( 22 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img26 ) );
-        res = getResources ().getIdentifier ( "@drawable/xx", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ax", null,getActivity (). getPackageName () );
         alphabet.get ( 23 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img25 ) );
-        res = getResources ().getIdentifier ( "@drawable/yy", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ay", null, getActivity ().getPackageName () );
         alphabet.get ( 24 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img24 ) );
-        res = getResources ().getIdentifier ( "@drawable/zz", null, getActivity ().getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/az", null, getActivity ().getPackageName () );
         alphabet.get ( 25 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img23 ) );
-        res = getResources ().getIdentifier ( "@drawable/yyy", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/ayy", null,getActivity (). getPackageName () );
         alphabet.get ( 26 ).setImageResource ( res );
         alphabet.add ( (ImageView) v.findViewById ( R.id.img22 ) );
-        res = getResources ().getIdentifier ( "@drawable/zzz", null,getActivity (). getPackageName () );
+        res = getResources ().getIdentifier ( "@drawable/azz", null,getActivity (). getPackageName () );
         alphabet.get ( 27 ).setImageResource ( res );
 
 
@@ -665,7 +665,7 @@ public class Braille extends Fragment {
                     char c = s.charAt ( i );
                     switch (c) {
                         case  'خ':
-                            res = getResources ().getIdentifier ( "@drawable/gg", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ag", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -675,7 +675,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ح' :
-                            res = getResources ().getIdentifier ( "@drawable/ff", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/af", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -685,7 +685,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ج' :
-                            res = getResources ().getIdentifier ( "@drawable/ee", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ae", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -695,7 +695,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ث':
-                            res = getResources ().getIdentifier ( "@drawable/dd", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ad", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -716,7 +716,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ب' :
-                            res = getResources ().getIdentifier ( "@drawable/bb", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ab", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -727,7 +727,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ا' :case 'ئ': case 'إ': case 'أ':case 'ء':
-                            res = getResources ().getIdentifier ( "@drawable/aa", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/aaa", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -737,7 +737,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ص' :
-                            res = getResources ().getIdentifier ( "@drawable/nn", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/an", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -748,7 +748,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ش' :
-                            res = getResources ().getIdentifier ( "@drawable/mm", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/am", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -758,7 +758,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'س' :
-                            res = getResources ().getIdentifier ( "@drawable/ll", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/al", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -769,7 +769,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ز':
-                            res = getResources ().getIdentifier ( "@drawable/kk", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ak", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -779,7 +779,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ر':
-                            res = getResources ().getIdentifier ( "@drawable/jj", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/aj", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -790,7 +790,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ذ' :
-                            res = getResources ().getIdentifier ( "@drawable/ii", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ai", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -800,7 +800,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'د' :
-                            res = getResources ().getIdentifier ( "@drawable/hh", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ah", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -811,7 +811,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ق':
-                            res = getResources ().getIdentifier ( "@drawable/uu", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/au", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -821,7 +821,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ف':
-                            res = getResources ().getIdentifier ( "@drawable/tt", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/at", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -832,7 +832,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'غ' :
-                            res = getResources ().getIdentifier ( "@drawable/ss", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/as", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -842,7 +842,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ع' :
-                            res = getResources ().getIdentifier ( "@drawable/rr", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ar", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -853,7 +853,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ظ' :
-                            res = getResources ().getIdentifier ( "@drawable/qq", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/aq", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -863,7 +863,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ط' :
-                            res = getResources ().getIdentifier ( "@drawable/pp", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ap", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -874,7 +874,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'ض':
-                            res = getResources ().getIdentifier ( "@drawable/oo", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ao", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -884,7 +884,7 @@ public class Braille extends Fragment {
 
                             break;
                         case 'ي': case 'ى':
-                            res = getResources ().getIdentifier ( "@drawable/zz", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/azz", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -895,7 +895,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'و':case 'ؤ':
-                            res = getResources ().getIdentifier ( "@drawable/yy", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ayy", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -907,7 +907,7 @@ public class Braille extends Fragment {
 
 
                         case 'ه':
-                            res = getResources ().getIdentifier ( "@drawable/zz", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/az", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -919,7 +919,7 @@ public class Braille extends Fragment {
 
 
                         case 'ن' :
-                            res = getResources ().getIdentifier ( "@drawable/yy", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ay", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -930,7 +930,7 @@ public class Braille extends Fragment {
                             break;
 
                         case 'م':
-                            res = getResources ().getIdentifier ( "@drawable/xx", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ax", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -939,7 +939,7 @@ public class Braille extends Fragment {
                             }
                             break;
                         case 'ل':
-                            res = getResources ().getIdentifier ( "@drawable/ww", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/aw", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -948,7 +948,7 @@ public class Braille extends Fragment {
                             }
                             break;
                         case 'ك' :
-                            res = getResources ().getIdentifier ( "@drawable/vv", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/av", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -1036,4 +1036,4 @@ public class Braille extends Fragment {
                 super.onActivityResult ( requestCode, resultCode, data );
                 break;
         }
-    }}
+}}

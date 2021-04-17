@@ -7,24 +7,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.ministery.Learn.Braille;
-import com.example.ministery.Profile.profile;
-
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_sign_up );
+        setContentView ( R.layout.sign_up_activity );
 
         Button signUp= findViewById ( R.id.sign_up );
 
+
+        /*******************
+         * TODO  authentification
+         */
         signUp.setOnClickListener (( new View.OnClickListener () {
 
             @Override
             public void onClick(View v) {
-
-                Intent menu= new Intent (getApplicationContext (), Menu.class);
+                Intent menu= new Intent (getApplicationContext (), MenuActivity.class);
                 startActivity ( menu );
 
             }
