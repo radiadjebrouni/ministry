@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ministery">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Market.AjouterProductActivity"></activity>
+        <activity android:name=".LogInActivity"></activity>
+        <activity android:name=".Market.AjouterProductActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainScreen.MainActivity">
             <intent-filter>
@@ -28,17 +28,22 @@
         <activity android:name=".TexttoSpeech" />
         <activity android:name=".Market.productDescriptionAcivity" />
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.ministery.provider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <!-- ressource file to create -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/files_path">
-            </meta-data>
+                android:resource="@xml/files_path"></meta-data>
         </provider>
     </application>
+
 
 </manifest>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ministery.LogInActivity;
 import com.example.ministery.R;
 import com.example.ministery.SignUpActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageFirstScreen SIXTH ;
     private  ImageFirstScreen[] images;
     private Button commencer;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,21 @@ public class MainActivity extends AppCompatActivity {
             mTabLayout = findViewById(R.id.tab_layout);
             mMyViewPager = findViewById(R.id.view_pager);
             commencer =findViewById ( R.id.commencer );
+            login = findViewById(R.id.activity_main_goLogin);
 
             commencer.setOnClickListener ( new View.OnClickListener () {
                 @Override
                 public void onClick(View view) {
                     Intent signUp=new Intent ( getApplicationContext (),SignUpActivity.class );
                     startActivity ( signUp );
+                }
+            } );
+
+            login.setOnClickListener ( new View.OnClickListener () {
+                @Override
+                public void onClick(View view) {
+                    Intent logIn = new Intent ( getApplicationContext (), LogInActivity.class );
+                    startActivity (logIn);
                 }
             } );
 
