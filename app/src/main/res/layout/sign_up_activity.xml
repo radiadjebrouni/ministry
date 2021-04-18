@@ -89,7 +89,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/enter_number"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:maxLength="10" />
     </LinearLayout>
 
     <LinearLayout
@@ -142,6 +143,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:background="@drawable/bouton_insc"
+        android:tag="1"
         android:text="@string/sign_in_btn"
         android:textColor="#FFFFFF">
 
@@ -167,16 +169,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/facebook_circular_logo"
-            android:background="#0000"/>
+            android:background="#0000"
+            android:tag="2"
+            app:srcCompat="@drawable/facebook_circular_logo" />
 
         <ImageButton
             android:id="@+id/google_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/google_plus"
-            android:background="#0000"/>
+            android:background="#0000"
+            android:tag="3"
+            app:srcCompat="@drawable/google_plus" />
 
     </LinearLayout>
 
