@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 public class SignUpActivity extends AppCompatActivity{
 
-    //les champs de texte
+    //les champs de texte (utilisation
     @BindView(R.id.text_field_name_insc) EditText nameEditText;
     @BindView(R.id.text_field_email_insc) EditText emailEditText;
     @BindView(R.id.text_field_phone_insc) EditText phoneEditText;
@@ -39,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity{
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.sign_up_activity );
 
+        //instanciation de l'object auth
         auth = FirebaseAuth.getInstance();
 
         signInButton = findViewById(R.id.button_sign_in);
@@ -62,6 +63,8 @@ public class SignUpActivity extends AppCompatActivity{
         String password = passwordEditText.getText().toString().trim();
         String passwordConfirmation = passwordConfirmationEditText.getText().toString().trim();
 
+        //controles sur les champs de texte
+
         if(email.isEmpty())
         {
             emailEditText.setError("Entrez un email valide");
@@ -76,11 +79,12 @@ public class SignUpActivity extends AppCompatActivity{
             return;
         }
 
+        //creation d'un utilisateur par email et mot de passe
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful()) //si la création est réussite
                         {
                             Toast.makeText(SignUpActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
                         }
