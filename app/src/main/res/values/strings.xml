@@ -25,7 +25,7 @@
     <string name="profile">Profile</string>
     <string name="enter_a_text_here_26_char_max">Enter a text here (26 char max)</string>
     <string name="mes_articles">Mes articles</string>
-    <string name="appeler">Appeler</string>
+    <string name="Contacter">Appeler</string>
     <string name="propri_taire">Propriétaire</string>
     <string name="service">Service</string>
     <string name="nom_hint">Nom</string>
@@ -58,4 +58,20 @@
         <item>Les troubles dys</item>
         <item>Polyhandicap</item>
     </string-array>
+
+ <!--products -->
+    <string name="nom_du_service">Nom du service</string>
+    <string name="type">Type</string>
+    <string name="description_product">Description</string>
+    <string name="adresse_produit">Adresse</string>
+    <string name="nom_proprietaire">Nom</string>
+    <string name="email">Email</string>
+    <string name="num_t_l">Num Tél</string>
+    <string name="signaler">Signaler</string>
+    <string name="se_d_connecter">se déconnecter</string>
+    <string name="echec_sms">Échec du SMS, veuillez réessayer plus tard</string>
+    <string name="nom_d_utilisateur">Nom d\'utilisateur</string>
+
+
+
 </resources>

@@ -9,8 +9,8 @@
         app:tabTextAppearance="@style/MyCustomTabText"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorAccent"
+        android:layout_height="50dp"
+        android:background="@color/white"
 
         />
 
