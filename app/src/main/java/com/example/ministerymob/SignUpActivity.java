@@ -9,12 +9,14 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity{
     @BindView(R.id.text_field_pswd_insc) EditText passwordEditText;
     @BindView(R.id.text_field_confirm_pswrd) EditText passwordConfirmationEditText;
 
+    ProgressBar progressBar;
     Button signInButton;
 
     //firebase authentification
@@ -121,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity{
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
         //creation d'un utilisateur par email et mot de passe
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -128,8 +132,22 @@ public class SignUpActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) //si la création est réussite
                         {
-                            Intent i = new Intent ( SignUpActivity.this,MenuActivity.class );
-                            startActivity (i);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if(currentUser.isEmailVerified()) //if the email is verified
+                            {
+                                //upload profile infos
+                                //to do when the classes are ready
+                                Intent i = new Intent ( SignUpActivity.this,MenuActivity.class );
+                                startActivity (i);
+                            }
+                            else
+                            {
+                                currentUser.sendEmailVerification(); //send verification link to his email
+                                Toast.makeText(SignUpActivity.this, "Veuillez confirmer votre mail en vous connectant à celle-ci", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent ( SignUpActivity.this,LogInActivity.class );
+                                startActivity (i);
+                            }
                         }
                         else
                         {

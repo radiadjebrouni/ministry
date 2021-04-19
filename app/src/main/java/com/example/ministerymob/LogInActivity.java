@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ministerymob.R;
@@ -25,6 +26,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.text_field_email_cnxn) EditText emailEditText;
     @BindView(R.id.text_field_pswd_cnxn) EditText passwordEditText;
     @BindView(R.id.button_log_in) Button logInButton;
+    ProgressBar progressBar;
     
     private FirebaseAuth auth;
 
@@ -78,6 +80,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        progressBar.setVisibility(View.VISIBLE);
+
         //if all the fields are good
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -85,7 +89,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            //send to the profile activity
+                            progressBar.setVisibility(View.INVISIBLE);
+                            //get profile infos
                             //to do when the classes are ready
                             Intent i = new Intent( LogInActivity.this, MenuActivity.class );
                             startActivity (i);
