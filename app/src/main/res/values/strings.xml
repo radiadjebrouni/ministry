@@ -16,6 +16,14 @@
     <string name="create_account">Créer un compte</string>
     <string name="go_login">Déjà membre ?</string>
 
+    <!--ERRORS - Text fields controllers -->
+    <string name="missing_email">Veuillez entrez un mail valide</string>
+    <string name="missing_password">Veuillez saisir un mot de passe</string>
+    <string name="missing_phone">Veuillez saisir un numéro de téléphone valide</string>
+    <string name="missing_name">Veuillez saisir un nom d\'utilisateur</string>
+    <string name="missing_password_confirmation">Veuillez confirmer votre mot de passe</string>
+    <string name="mismatching_password">La confirmation ne correspond pasau mot de passe</string>
+
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="besoin">Besoin</string>
@@ -59,7 +67,7 @@
         <item>Polyhandicap</item>
     </string-array>
 
- <!--products -->
+    <!--products -->
     <string name="nom_du_service">Nom du service</string>
     <string name="type">Type</string>
     <string name="description_product">Description</string>

@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.ministerymob.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +39,9 @@ public class SignUpActivity extends AppCompatActivity{
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.sign_up_activity );
 
+        //relier les vues au variables
+        ButterKnife.bind(this);
+
         //instanciation de l'object auth
         auth = FirebaseAuth.getInstance();
 
@@ -48,15 +51,10 @@ public class SignUpActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 registration();
-                Intent i=new Intent ( SignUpActivity.this,MenuActivity.class );
-                startActivity ( i );
             }
         } );
 
-        ButterKnife.bind(this);
         overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
-
-
 
     }
 
@@ -68,19 +66,58 @@ public class SignUpActivity extends AppCompatActivity{
         String password = passwordEditText.getText().toString().trim();
         String passwordConfirmation = passwordConfirmationEditText.getText().toString().trim();
 
-        //controles sur les champs de texte
+        //controls on text fields
+
+        if(name.isEmpty())
+        {
+            nameEditText.setError(getResources().getString(R.string.missing_name));
+            nameEditText.requestFocus();
+            return;
+        }
 
         if(email.isEmpty())
         {
-            emailEditText.setError("Entrez un email valide");
+            emailEditText.setError(getResources().getString(R.string.missing_email));
             emailEditText.requestFocus();
+            return;
+        }
+
+        //if the string doesn't match the email form
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            emailEditText.setError(getResources().getString(R.string.missing_email));
+            emailEditText.requestFocus();
+            return;
+        }
+
+        //if the phone number is empty or have less than 10 numbers
+        if(phone.length()<10)
+        {
+            phoneEditText.setError(getResources().getString(R.string.missing_phone));
+            phoneEditText.requestFocus();
             return;
         }
 
         if(password.isEmpty())
         {
-            passwordEditText.setError("Entrez un mot de passe");
+            passwordEditText.setError(getResources().getString(R.string.missing_password));
             passwordEditText.requestFocus();
+            return;
+        }
+
+        if(passwordConfirmation.isEmpty())
+        {
+            passwordConfirmationEditText.setError(getResources().getString(R.string.missing_password_confirmation));
+            passwordConfirmationEditText.requestFocus();
+            return;
+        }
+
+        //if password doesn't match confirmation
+        if(!passwordConfirmation.equals(password))
+        {
+            passwordConfirmationEditText.setText("");
+            passwordConfirmationEditText.setError(getResources().getString(R.string.mismatching_password));
+            passwordConfirmationEditText.requestFocus();
             return;
         }
 
@@ -91,7 +128,8 @@ public class SignUpActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) //si la création est réussite
                         {
-                            Toast.makeText(SignUpActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent ( SignUpActivity.this,MenuActivity.class );
+                            startActivity (i);
                         }
                         else
                         {
