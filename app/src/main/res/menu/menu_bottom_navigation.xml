@@ -4,25 +4,25 @@
     <item
         android:id="@+id/profile"
         android:enabled="true"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/user_icon"
         android:title="Profile"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/chat"
         android:enabled="true"
-        android:icon="@drawable/ic_favorite_black_24dp"
+        android:icon="@drawable/favorite_icon"
         android:title="Fav"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/market"
         android:enabled="true"
-        android:icon="@drawable/ic_store_mall_directory_black_24dp"
+        android:icon="@drawable/market_place_icon"
         android:title="Market"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/learn"
         android:enabled="true"
-        android:icon="@drawable/ic_language"
+        android:icon="@drawable/knowledge_icon"
         android:title="Learn"
         app:showAsAction="ifRoom" />
 </menu>
