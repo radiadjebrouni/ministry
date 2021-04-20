@@ -2,15 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ministerymob">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,21 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.ministerymob.LogInActivity"></activity>
-        <activity android:name="com.example.ministerymob.Market.AjouterProductActivity" />
-        <activity android:name="com.example.ministerymob.SignUpActivity" />
-        <activity android:name="com.example.ministerymob.MainScreen.MainActivity">
+        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".Market.AjouterProductActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".MainScreen.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.ministerymob.Learn.SignFragment" />
-        <activity android:name="com.example.ministerymob.MenuActivity" />
-        <activity android:name="com.example.ministerymob.Profile.modifierProductActivity" />
-        <activity android:name="com.example.ministerymob.TexttoSpeech" />
-        <activity android:name="com.example.ministerymob.Market.productDescriptionAcivity" />
+        <activity android:name=".Learn.SignFragment" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".Profile.modifierProductActivity" />
+        <activity android:name=".TexttoSpeech" />
+        <activity android:name=".Market.productDescriptionAcivity" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -47,9 +39,16 @@
             <!-- ressource file to create -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/files_path"></meta-data>
+                android:resource="@xml/files_path" />
         </provider>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

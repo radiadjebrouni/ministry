@@ -14,7 +14,10 @@
     <string name="log_in_btn">Se connecter</string>
     <string name="social_media_signIn">Se connecter avec :</string>
     <string name="create_account">Créer un compte</string>
-    <string name="go_login">Déjà membre ?</string>
+    <string name="go_login"><u>Déjà membre ?</u></string>
+    <string name="forgot_password"><u>Mot de passe oublié ?</u></string>
+    <string name="forgot_password_title">Réinitialisation</string>
+    <string name="forgot_password_button">Réinitialiser mot de passe</string>
 
     <!--ERRORS - Text fields controllers -->
     <string name="missing_email">Veuillez entrez un mail valide</string>
@@ -52,6 +55,19 @@
     <string name="entrer_adresse">Entrer adresse</string>
 
 
+    <string name="nom_du_service">Nom du service</string>
+
+    <!--products -->
+    <string name="type">Type</string>
+    <string name="description_product">Description</string>
+    <string name="adresse_produit">Adresse</string>
+    <string name="nom_proprietaire">Nom</string>
+    <string name="email">Email</string>
+    <string name="num_t_l">Num Tél</string>
+    <string name="signaler">Signaler</string>
+    <string name="se_d_connecter">se déconnecter</string>
+    <string name="echec_sms">Échec du SMS, veuillez réessayer plus tard</string>
+    <string name="nom_d_utilisateur">Nom d\'utilisateur</string>
     <string-array name="types_handicapes">
         <item>tout</item>
         <item>auditif</item>
@@ -66,20 +82,6 @@
         <item>Les troubles dys</item>
         <item>Polyhandicap</item>
     </string-array>
-
-    <!--products -->
-    <string name="nom_du_service">Nom du service</string>
-    <string name="type">Type</string>
-    <string name="description_product">Description</string>
-    <string name="adresse_produit">Adresse</string>
-    <string name="nom_proprietaire">Nom</string>
-    <string name="email">Email</string>
-    <string name="num_t_l">Num Tél</string>
-    <string name="signaler">Signaler</string>
-    <string name="se_d_connecter">se déconnecter</string>
-    <string name="echec_sms">Échec du SMS, veuillez réessayer plus tard</string>
-    <string name="nom_d_utilisateur">Nom d\'utilisateur</string>
-
 
 
 </resources>

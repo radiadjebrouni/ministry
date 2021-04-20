@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ministerymob.R;
@@ -26,8 +27,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.text_field_email_cnxn) EditText emailEditText;
     @BindView(R.id.text_field_pswd_cnxn) EditText passwordEditText;
     @BindView(R.id.button_log_in) Button logInButton;
-    ProgressBar progressBar;
-    
+    @BindView(R.id.activity_logIn_forgotten_password) TextView forgottenPassword;
+
     private FirebaseAuth auth;
 
     @Override
@@ -39,6 +40,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
 
         logInButton.setOnClickListener(this);
+        forgottenPassword.setOnClickListener(this);
         
         //intanciate firebase auth
         auth = FirebaseAuth.getInstance();
@@ -48,7 +50,15 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v.getId() == R.id.button_log_in)
         {
+            //execute loging
             logIn();
+        }
+        else if(v.getId() == R.id.activity_logIn_forgotten_password)
+        {
+            //redirect to forgot password
+            Intent intent = new Intent(LogInActivity.this,ForgotPasswordActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -80,7 +90,6 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
 
         //if all the fields are good
         auth.signInWithEmailAndPassword(email,password)
@@ -89,9 +98,9 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            progressBar.setVisibility(View.INVISIBLE);
                             //get profile infos
                             //to do when the classes are ready
+                            Toast.makeText(LogInActivity.this, "LogIn failed", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent( LogInActivity.this, MenuActivity.class );
                             startActivity (i);
                         }
