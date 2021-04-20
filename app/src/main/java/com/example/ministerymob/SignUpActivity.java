@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -169,6 +170,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         }
                         else
                         {
+                            Log.i("tttt",task.getException ().getMessage ());
                             Toast.makeText(SignUpActivity.this, "User creation failed", Toast.LENGTH_SHORT).show();
                         }
                     }

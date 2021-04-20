@@ -14,18 +14,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.ministerymob.Fav.Enregistrement;
 import com.example.ministerymob.Profile.modifierProductActivity;
 import com.example.ministerymob.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context mContext ;
+    private List<Enregistrement> list_enreg =null;
     private List<product> mData ;
     private boolean  myProducts=false ; //if we are on the profile fragment or the market pour afficher les bouttons du modification
 
@@ -40,6 +44,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mData = mData;
         this.myProducts=myp;
     }
+
+    public RecyclerViewAdapter(Context mContext , ArrayList<Enregistrement> list_enreg) {
+        this.mContext = mContext;
+        this.list_enreg=list_enreg;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -52,89 +62,151 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        if(!myProducts)
-        {
-            holder.modif.setVisibility ( holder.itemView.GONE );
-            holder.supp.setVisibility (  holder.itemView.GONE );
-        }
-        else {
+         if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
+         {
+             if (!myProducts) // verifier si on est dans le profil pour afficher modif et delete icon
+             {
+                 holder.modif.setVisibility ( holder.itemView.GONE );
+                 holder.supp.setVisibility ( holder.itemView.GONE );
+             } else {
 
-            holder.modif.setVisibility ( holder.itemView.VISIBLE );
-            holder.supp.setVisibility (  holder.itemView.VISIBLE );
-            holder.modif.setOnClickListener ( new View.OnClickListener () {
-                @Override
-                public void onClick(View v) {
+                 holder.modif.setVisibility ( holder.itemView.VISIBLE );
+                 holder.supp.setVisibility ( holder.itemView.VISIBLE );
+                 holder.modif.setOnClickListener ( new View.OnClickListener () {
+                     @Override
+                     public void onClick(View v) {
 
-                    /***************************************
-                     *
-                     * modefy the article
-                     */
+                         /***************************************
+                          *
+                          * modefy the article
+                          */
 
-                    Intent modif =new Intent ( mContext, modifierProductActivity.class );
-                    mContext.startActivity ( modif );
-                }
-            } );
-
-
-            holder.supp.setOnClickListener ( new View.OnClickListener () {
-                @Override
-                public void onClick(View v) {
-
-                    /***************************************
-                     *
-                     * deleting confirmation
-                     */
-                    AlertDialog.Builder builder = new AlertDialog.Builder ( mContext );
-                    builder.setMessage ( "Etes vous sur de vouloir supprimer cet article?" )
-                            .setNegativeButton ( "Concel", new DialogInterface.OnClickListener () {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss ();
-                                }
-                            })
-                            .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+                         Intent modif = new Intent ( mContext, modifierProductActivity.class );
+                         mContext.startActivity ( modif );
+                     }
+                 } );
 
 
-                                    /*********************************
-                                     * todo delete the article from the db
-                                     */
-                                }
-                            });
+                 holder.supp.setOnClickListener ( new View.OnClickListener () {
+                     @Override
+                     public void onClick(View v) {
+
+                         /***************************************
+                          *
+                          * deleting confirmation
+                          */
+                         AlertDialog.Builder builder = new AlertDialog.Builder ( mContext );
+                         builder.setMessage ( "Etes vous sur de vouloir supprimer cet article?" )
+                                 .setNegativeButton ( "Concel", new DialogInterface.OnClickListener () {
+                                     @Override
+                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                         dialogInterface.dismiss ();
+                                     }
+                                 } )
+                                 .setPositiveButton ( "Oui", new DialogInterface.OnClickListener () {
+                                     @Override
+                                     public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                    builder.show ();
-
-                }
-            } );
-        }
-
-        holder.name.setText(mData.get(position).getName ());
-        holder.img_thumbnail.setImageResource ( mContext.getResources().getIdentifier(mData.get(position).getImg (), "drawable", mContext.getPackageName()));
-        holder.relativeLy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext, productDescriptionAcivity.class);
-
-                // passing data to the book activity
-                intent.putExtra("name",mData.get(position).getName ());
-                intent.putExtra("Description",mData.get(position).getDescription ());
-                intent.putExtra("img",mData.get(position).getImg ());
-                // start the activity
-                mContext.startActivity(intent);
-
-            }
-        });
+                                         /*********************************
+                                          * todo delete the article from the db
+                                          */
+                                     }
+                                 } );
 
 
+                         builder.show ();
+
+                     }
+                 } );
+             }
+
+             holder.name.setText ( mData.get ( position ).getName () );
+             holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( mData.get ( position ).getImg (), "drawable", mContext.getPackageName () ) );
+             holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
+                 @Override
+                 public void onClick(View v) {
+
+                     Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
+
+                     // passing data to the product description activity
+                     intent.putExtra ( "name", mData.get ( position ).getName () );
+                     intent.putExtra ( "Description", mData.get ( position ).getDescription () );
+                     intent.putExtra ( "img", mData.get ( position ).getImg () );
+                     // start the activity
+                     mContext.startActivity ( intent );
+
+                 }
+             } );
+
+
+         }
+
+         else {// en est dans le fragmnt d'enregistrement, afficher juste boutton delete
+
+             holder.modif.setVisibility ( holder.itemView.GONE );
+             holder.supp.setVisibility ( holder.itemView.VISIBLE );
+
+             holder.name.setText ( list_enreg.get ( position ).getName () );
+//             holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( list_enreg.get ( position ).getImg (), "drawable", mContext.getPackageName () ) );
+             holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
+                 @Override
+                 public void onClick(View v) {
+
+                     Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
+
+                     // passing data to the product description activity
+                     intent.putExtra ( "name", list_enreg.get ( position ).getName () );
+                     intent.putExtra ( "Description", list_enreg.get ( position ).getDescription () );
+                     intent.putExtra ( "img", list_enreg.get ( position ).getImg () );
+                     // start the activity
+                     mContext.startActivity ( intent );
+
+                 }
+             } );
+
+             holder.supp.setOnClickListener ( new View.OnClickListener () {
+                 @Override
+                 public void onClick(View v) {
+
+                     /***************************************
+                      *
+                      * deleting confirmation
+                      */
+                     AlertDialog.Builder builder = new AlertDialog.Builder ( mContext );
+                     builder.setMessage ( mContext.getString( R.string.confirmer_annulation_enregistrement) )
+                             .setNegativeButton ( "Concel", new DialogInterface.OnClickListener () {
+                                 @Override
+                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                     dialogInterface.dismiss ();
+                                 }
+                             } )
+                             .setPositiveButton ( "Oui", new DialogInterface.OnClickListener () {
+                                 @Override
+                                 public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                                     /*********************************
+                                      * todo delete the article from les enregistrement du user
+                                      */
+                                 }
+                             } );
+
+
+                     builder.show ();
+
+                 }
+             } );
+
+
+         }
 
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        if(mData==null) return  list_enreg.size ();
+        else return mData.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

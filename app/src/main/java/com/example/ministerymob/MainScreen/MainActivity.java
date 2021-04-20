@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ministerymob.LogInActivity;
+import com.example.ministerymob.MenuActivity;
 import com.example.ministerymob.R;
 import com.example.ministerymob.SignUpActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             commencer.setOnClickListener ( new View.OnClickListener () {
                 @Override
                 public void onClick(View view) {
-                    Intent signUp=new Intent ( getApplicationContext (),SignUpActivity.class );
+                    Intent signUp=new Intent ( getApplicationContext (), MenuActivity.class );
                     startActivity ( signUp );
                 }
             } );

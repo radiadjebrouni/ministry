@@ -28,6 +28,10 @@ public class product {
 
     }
 
+    public product() {
+
+    }
+
 
     public int getNumTel() {
         return numTel;

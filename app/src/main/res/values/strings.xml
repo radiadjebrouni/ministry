@@ -7,7 +7,7 @@
     <string name="connexion_text">Connexion</string>
     <string name="enter_name">Nom d\'utilisateur</string>
     <string name="enter_email">Email</string>
-    <string name="enter_password">Mot de passe</string>
+    <string name="enter_password">Mot de passe (6 lettres min)</string>
     <string name="confirme_mdp">Confirmer mot de passe</string>
     <string name="sign_in_btn">S\'inscrire</string>
     <string name="log_in_btn">Se connecter</string>
@@ -66,19 +66,16 @@
     <string name="se_d_connecter">se déconnecter</string>
     <string name="echec_sms">Échec du SMS, veuillez réessayer plus tard</string>
     <string name="nom_d_utilisateur">Nom d\'utilisateur</string>
+    <string name="confirmer_annulation_enregistrement">Etes vous sur de vouloir annuler l\'enregistrement de cet article?</string>
+    <string name="afficher_tout">Afficher tout</string>
+    <string name="liste_vide">Liste vide</string>
     <string-array name="types_handicapes">
-        <item>tout</item>
+        <item>Général</item>
         <item>auditif</item>
         <item>visuel</item>
-        <item>moteur</item>
-        <item>Autisme </item>
+        <item>Mental </item>
         <item>Handicap Psychique</item>
-        <item>Plurihandicap</item>
-        <item>Polyhandicap</item>
-        <item>Traumatismes crâniens</item>
-        <item>Maladies dégénératives</item>
-        <item>Les troubles dys</item>
-        <item>Polyhandicap</item>
+
     </string-array>
 
 
