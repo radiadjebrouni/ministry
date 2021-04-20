@@ -3,7 +3,10 @@
 *.log
 /.idea/*
 /local.properties
+/.idea/*
 /.idea/caches
+/.idea/misc.xml
+/.idea/gradle.xml
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
