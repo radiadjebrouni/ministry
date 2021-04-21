@@ -176,39 +176,44 @@ public class productDescriptionAcivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                final CharSequence[] options = { "Appeler", "Envoyer un SMS","Envoyer un Email","Viber Send" };
                 //show(getSupportFragmentManager(), "confirmation");
                 AlertDialog.Builder builder = new AlertDialog.Builder ( productDescriptionAcivity.this );
                 builder.setTitle ( R.string.Contacter )
-                        .setNegativeButton ( "Appeler", new DialogInterface.OnClickListener () {
+                        .setItems ( options, new DialogInterface.OnClickListener () {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
+                            public void onClick(DialogInterface dialogInterface, int item) {
 
                                 /***********************************
                                  *
                                  * TODO replace number with the phone number of the service's owner
                                  */
-                               callPhone("0897986866");
-                            }
-                        })
-                        .setPositiveButton("Envoyer un SMS", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (options[item].equals ( "Appeler" )) {
+                                    callPhone ( "0897986866" );
+                                }
+                                    else {
+                                    if (options[item].equals ( "Envoyer un SMS" )) {
+                                        sendSMS ( "087654" );
+                                    } else {
+                                        if (options[item].equals ( "Envoyer un Email" )) {
+                                            sendEmail ( v.getContext (), "radiadj2000@gmail.com" );
 
-                                Log.i("Send SMS", "");
+                                        }
+                                        else {
+                                            if (options[item].equals ( "Viber Send" )) {
+                                                addViberNumber ( v.getContext (), "213" + "555555550" );
+                                            }
+                                        }}}}
 
-                                sendSMS("087654");
-                            }
-                        });
+                                })
 
-
-                      /*  .setNegativeButton ("Concel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton ("Concel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 dialogInterface.dismiss ();
                             }
-                        });*/
+                        });
 
                 builder.show ();
 
@@ -303,5 +308,42 @@ public class productDescriptionAcivity extends AppCompatActivity {
 
             // other 'case' lines to check for other
             // permissions this app might request
-        }}}}
+        }}}
 
+    public void addViberNumber(Context context,String phone) {
+        String viberPackageName = "com.viber.voip";
+
+        try {
+            context.startActivity(new
+                            Intent(Intent.ACTION_VIEW,
+                            Uri.parse("viber://add?number="+phone)
+                    )
+            );
+        } catch (ActivityNotFoundException ex) {
+            try {
+                context.startActivity
+                        (new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=+" + viberPackageName))
+                        );
+            } catch (ActivityNotFoundException exe) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=" + viberPackageName)
+                        )
+                );
+            }
+        }
+    }
+
+    public void sendEmail(Context context, String email)
+    {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto",email, null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "EXTRA_SUBJECT");
+        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
+
+
+
+
+                        }

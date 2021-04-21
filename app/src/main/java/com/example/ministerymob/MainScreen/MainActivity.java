@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.example.ministerymob.LogInActivity;
 import com.example.ministerymob.MenuActivity;
 import com.example.ministerymob.R;
 import com.example.ministerymob.SignUpActivity;
+import com.example.ministerymob.TexttoSpeech;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             commencer.setOnClickListener ( new View.OnClickListener () {
                 @Override
                 public void onClick(View view) {
-                    Intent signUp=new Intent ( getApplicationContext (), MenuActivity.class );
+                    Intent signUp=new Intent ( getApplicationContext (), SignUpActivity.class );
                     startActivity ( signUp );
                 }
             } );
