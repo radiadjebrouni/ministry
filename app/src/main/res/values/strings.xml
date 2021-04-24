@@ -69,6 +69,9 @@
     <string name="confirmer_annulation_enregistrement">Etes vous sur de vouloir annuler l\'enregistrement de cet article?</string>
     <string name="afficher_tout">Afficher tout</string>
     <string name="liste_vide">Liste vide</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="entrer_num_tel">Entrer num tel</string>
+    <string name="entrer_l_adresse">Entrer l\'adresse</string>
     <string-array name="types_handicapes">
         <item>Général</item>
         <item>auditif</item>

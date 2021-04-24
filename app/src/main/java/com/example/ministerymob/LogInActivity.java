@@ -132,7 +132,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         {
                             //get profile infos
                             //to do when the classes are ready
-                            Toast.makeText(LogInActivity.this, "LogIn failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, "LogIn success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent( LogInActivity.this, MenuActivity.class );
                             startActivity (i);
                         }

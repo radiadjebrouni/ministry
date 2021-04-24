@@ -13,7 +13,8 @@
         <activity android:name=".LogInActivity" />
         <activity android:name=".Market.AjouterProductActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainScreen.MainActivity">
+        <activity android:name=".MainScreen.MainActivity" />
+        <activity android:name=".SpashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

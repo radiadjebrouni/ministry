@@ -15,11 +15,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.ministerymob.Market.AjouterProductActivity;
 import com.example.ministerymob.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class ImageViewPager extends Fragment {
+public class ImageViewPager extends Fragment implements AjouterProductActivity.passData {
 
     // widgets
     private ImageView mImage;
@@ -72,24 +74,10 @@ public class ImageViewPager extends Fragment {
 
         }
     }
-}
-class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-
-    public MyPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
-        super(fm);
-        mFragments = fragments;
-    }
 
     @Override
-    public Fragment getItem(int position) {
-        return mFragments.get(position);
-    }
+    public void apply(FirebaseFirestore db) {
 
-    @Override
-    public int getCount() {
-        return mFragments.size();
     }
 }
 

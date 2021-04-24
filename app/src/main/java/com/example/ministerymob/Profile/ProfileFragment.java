@@ -38,6 +38,29 @@ public class ProfileFragment extends Fragment {
         email=view.findViewById ( R.id.email_user );
         deconnecter=view.findViewById ( R.id.deconnecter );
         deconnecter.setBackgroundResource ( R.drawable.bouton_commencer );
+
+
+        /************************
+         *
+         * TODO
+         * Geting my products from db
+         */
+        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,"chaise"  ));
+        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,"chaise"  ));
+        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",012l,a,"chaise"  ));
+        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,"chaise"  ));
+        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,"chaise"  ));
+
+
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager ( getContext (),LinearLayoutManager.HORIZONTAL,false );
+        RecyclerView myrv = (RecyclerView)view. findViewById(R.id.recyclerview_profile);
+        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity (),MyProducts,true);
+
+        myrv.setLayoutManager ( linearLayoutManager );
+        myrv.setAdapter(myAdapter);
+        myrv.setItemAnimator (new DefaultItemAnimator() );
+
+
         deconnecter.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -58,24 +81,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated ( view, savedInstanceState );
 
-        /************************
-         *
-         * TODO
-         * Geting my products from db
-         */
-        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ));
-        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ));
-        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",012,a,"chaise"  ));
-        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ));
-        MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ));
 
-
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager ( getContext (),LinearLayoutManager.HORIZONTAL,false );
-        RecyclerView myrv = (RecyclerView)view. findViewById(R.id.recyclerview_profile);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity (),MyProducts,true);
-
-        myrv.setLayoutManager ( linearLayoutManager );
-        myrv.setAdapter(myAdapter);
-        myrv.setItemAnimator (new DefaultItemAnimator() );
     }
 }

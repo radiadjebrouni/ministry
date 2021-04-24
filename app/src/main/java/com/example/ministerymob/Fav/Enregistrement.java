@@ -7,31 +7,66 @@ import java.util.Date;
 
 public class Enregistrement extends product {
 
-    private Date dateEnregistrement;
+    private String dateEnregistrement;
+    private String IdEnreg;
+    private String idEnregistreur;
 
-    public Date getDateEnregistrement() {
+    public String getDateEnregistrement() {
         return dateEnregistrement;
     }
 
-    public void setDateEnregistrement(Date dateEnregistrement) {
+    public void setDateEnregistrement(String dateEnregistrement) {
         this.dateEnregistrement = dateEnregistrement;
     }
 
-    public Enregistrement(String name, String type, String description, String price, String nomUser, String emailUser, int num, Adresse adresse, String img) {
+    public Enregistrement(String name, String type, String description, String price, String nomUser, String emailUser, Long num, Adresse adresse, String img) {
         super ( name, type, description, price, nomUser, emailUser, num, adresse, img );
     }
 
-    public Enregistrement(product p,Date date) {
+    public Enregistrement(product p,String date) {
         this.dateEnregistrement=date;
+        this.setType ( p.getType () );
+        this.setName ( p.getName () );
+        this.setDescription ( p.getDescription () );
+        this.setEmailUser ( p.getEmailUser () );
+        this.setImg ( p.getImg () );
+        this.setNomUser ( p.getNomUser () );
+        this.setNumTel ( p.getNumTel () );
+        this.setPrice ( p.getPrice () );
+        this.setAdresse ( p.getAdresse () );
+        this.setNbSignal ( 0 );
+        this.setOffered ( p.getOffered () );
+        this.setDate_creation ( p.getDate_creation () );
+        this.setAdresseInput ( p.getAdresseInput () );
+        this.setIdEnreg ( p.getId () );
+      //  this.setIdEnregistreur ( p.get );
+
+    }
+
+    public String getIdEnregistreur() {
+        return idEnregistreur;
+    }
+
+    public void setIdEnregistreur(String idEnregistreur) {
+        this.idEnregistreur = idEnregistreur;
+    }
+
+    public Enregistrement(){}
+    public String getIdEnreg() {
+        return IdEnreg;
+    }
+
+    public void setIdEnreg(String idEnreg) {
+        IdEnreg = idEnreg;
     }
 
     @Override
-    public int getNumTel() {
+    public Long getNumTel() {
         return super.getNumTel ();
     }
 
     @Override
-    public void setNumTel(int numTel) {
+    public void setNumTel(Long numTel) {
         super.setNumTel ( numTel );
     }
 
@@ -48,11 +83,6 @@ public class Enregistrement extends product {
     @Override
     public String getName() {
         return super.getName ();
-    }
-
-    @Override
-    public void setTitle(String title) {
-        super.setTitle ( title );
     }
 
     @Override

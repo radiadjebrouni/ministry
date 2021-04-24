@@ -91,7 +91,7 @@
                     android:layout_marginTop="30dp"
                     android:text="@string/se_d_connecter"
                     android:textColor="@color/white"
-                    android:textSize="8dp" />
+                    android:textSize="12dp" />
             </LinearLayout>
         </RelativeLayout>
 

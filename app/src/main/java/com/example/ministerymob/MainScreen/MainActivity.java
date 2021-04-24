@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
             commencer.setOnClickListener ( new View.OnClickListener () {
                 @Override
                 public void onClick(View view) {
-                    Intent signUp=new Intent ( getApplicationContext (), SignUpActivity.class );
+                    Intent signUp=new Intent ( getApplicationContext (), MenuActivity.class );
                     startActivity ( signUp );
+                    overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
+
                 }
             } );
 
@@ -57,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent logIn = new Intent ( getApplicationContext (), LogInActivity.class );
                     startActivity (logIn);
+                    overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
+
                 }
             } );
-        overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
 
 
 

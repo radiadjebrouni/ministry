@@ -16,7 +16,7 @@ import com.example.ministerymob.MainScreen.MainActivity;
 
 public class SpashScreenActivity extends AppCompatActivity {
 
-    private  static  int TIME_WAIT_SPLASH =2800;
+    private  static  int TIME_WAIT_SPLASH =3000;
     Animation topAnim ,bassAnim;
     ImageView image ,image2;
     TextView text;
@@ -39,6 +39,8 @@ public class SpashScreenActivity extends AppCompatActivity {
                     public void run() {
                         Intent intent = new Intent( SpashScreenActivity.this,MainActivity.class );
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
+
                         finish();
 
                     }

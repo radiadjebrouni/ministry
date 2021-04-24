@@ -25,17 +25,18 @@
             android:orientation="horizontal">
 
             <SearchView
+                android:id="@+id/search_bar"
                 android:layout_width="0dp"
                 android:background="@drawable/fond_barre_recherche"
-                android:layout_weight=".35"
+                android:layout_weight=".40"
                 android:layout_marginRight="10dp"
 
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="12dp"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_weight=".30"
-                android:layout_height="35dp"
+                android:layout_weight=".25"
+                android:layout_height="45dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 app:cardCornerRadius="5dp">
@@ -73,7 +74,7 @@
             android:padding="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_id"
+                android:id="@+id/recyclerview_id_need"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true">

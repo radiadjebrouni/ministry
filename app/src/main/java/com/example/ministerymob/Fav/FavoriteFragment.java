@@ -24,6 +24,12 @@ import com.example.ministerymob.Market.Adresse;
 import com.example.ministerymob.Market.RecyclerViewAdapter;
 import com.example.ministerymob.Market.product;
 import com.example.ministerymob.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,27 +48,23 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
     private LinearLayoutManager layoutManager;
     private TextView vide;
     private Button affich_tt;
-
+    private FirebaseFirestore  db = FirebaseFirestore.getInstance ();
+    private CollectionReference notebookRef ;
+    private  ArrayList<Enregistrement> list_enreg = new ArrayList<Enregistrement> ();
     private RecyclerView.Adapter mAdapter;
+    private RecyclerView myrv;
+    private RecyclerViewAdapter myAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root =inflater.inflate ( R.layout.favorite_fragment,container,false );
-
+        final TextView year =root.findViewById ( R.id.year );
         affich_tt =root.findViewById ( R.id.afficher_tt );
+        myrv = (RecyclerView) root.findViewById ( R.id.recyclerview_id_offer );
+
 
         affich_tt.setBackgroundResource ( R.drawable.bouton_commencer );
-
-
-
-        return root;
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
-        final TextView year =root.findViewById ( R.id.year );
 
         affich_tt.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -152,6 +154,18 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
 
         });
 
+
+
+        return root;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+
+
+
+
     }
 
     @Override
@@ -181,7 +195,7 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
     public void afficher_enreg(Date date,   View view)
     {
 
-        ArrayList<Enregistrement> list_enreg = new ArrayList<Enregistrement> ();
+
         ArrayList<product> MyProducts = new ArrayList<product> ();
         layoutManager = new LinearLayoutManager ( getActivity () );
 
@@ -202,24 +216,69 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
             DateFormat dateForma = new SimpleDateFormat ( "yyyy-MM-dd" );
             String strDat= dateForma.format ( date.getTime () );
             /******************************************
-             * todo get enregesitrements which has date d'enregistrement = strDate, putting them into list_enreg
+             * todo  (DONE )get enregesitrements which has date d'enregistrement = strDate, putting them into list_enreg
              */
+
+            setupAdapter ( view);
 
         }
 
-        Adresse a= new Adresse ("latitude","emptitude");
+       /* Adresse a= new Adresse ("latitude","emptitude");
 
-        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ),date));
-        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ),date));
-        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ),date));
-        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ),date));
-        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123,a,"chaise"  ),date));
+        list_enreg.add ( new Enregistrement ( new product ( "title","type","description","price","nom user","email user",0123l,a,"chaise"  ),"todat"));
 
         RecyclerView myrv = (RecyclerView)view. findViewById(R.id.fav_recycleview);
         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity (),list_enreg);
         myrv.setLayoutManager(new GridLayoutManager (view.getContext (),2));
         myrv.setAdapter(myAdapter);
 
-        recyclerView.setAdapter ( myAdapter );
+        recyclerView.setAdapter ( myAdapter );*/
     }
+
+    /**************Firebase***************/
+
+    private void setupAdapter(View view)
+    {
+        notebookRef = db.collection("Favorites");
+        list_enreg=new ArrayList<> (  );
+        notebookRef.get () // todo .whereEqualTo ( "emailUser",1 ).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.i("prodd","sucees");
+
+
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Enregistrement p = documentSnapshot.toObject(Enregistrement.class);
+                            p.setId (documentSnapshot.getId());
+                          //  Enregistrement pr=new Enregistrement (p);
+
+                            if( !list_enreg.contains ( p ))
+                                list_enreg.add ( p );
+
+
+                        }
+                        Adresse a = new Adresse ( "latitude", "emptitude" );
+//                Log.i ( "lissss"," "+listeProduct.size () );
+                        myrv = (RecyclerView) view.findViewById ( R.id.fav_recycleview );
+
+                        if(list_enreg!=null ) {
+
+                            myAdapter = new RecyclerViewAdapter (  view.getContext (), list_enreg);
+                            myrv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
+                            myrv.setHasFixedSize ( true );
+                            myAdapter.notifyDataSetChanged ();
+                            myrv.setAdapter ( myAdapter );
+                        }
+
+
+                    }
+                }).addOnFailureListener ( new OnFailureListener () {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("prodd",e.getMessage ());
+            }
+        } );
+    }
+
 }

@@ -14,12 +14,12 @@ public class market_adapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch (i){
             case 0:
-                Fragment fragment = new offeredServicesFragment ();
+                Fragment fragment = new neededServicesFragment ();
 
                 return fragment;
 
             case 1:
-                Fragment f = new neededServicesFragment () ;
+                Fragment f = new offeredServicesFragment () ;
 
                 return f;
 

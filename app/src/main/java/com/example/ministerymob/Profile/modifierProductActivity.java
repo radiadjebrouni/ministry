@@ -55,10 +55,9 @@ public class modifierProductActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_ajouter_product );
-        img_product=findViewById ( R.id.img_product );
+//        img_product=findViewById ( R.id.img_product );
         nom_service=findViewById ( R.id.entrer_nom );
         prix=findViewById ( R.id.entrer_prix );
-        type=findViewById ( R.id.entrer_type );
         description=findViewById ( R.id.entrer_desc );
 
 

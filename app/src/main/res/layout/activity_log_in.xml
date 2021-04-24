@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="90dp"
         app:srcCompat="@drawable/logo_insc" />
 
     <TextView
@@ -26,15 +26,14 @@
         android:gravity="center"
         android:text="@string/connexion_text"
         android:textColor="@color/colorPrimary"
-        android:textScaleX="1.2"
-        android:textSize="40sp" />
+
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="46dp"
         android:layout_gravity="center"
         android:layout_margin="3dp"
-        android:background="@drawable/text_area_insc"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
@@ -47,7 +46,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/enter_email"
-            android:textScaleX="1.2"
+            android:textSize="14dp"
             android:inputType="textEmailAddress" />
     </LinearLayout>
 
@@ -56,10 +55,10 @@
         android:layout_height="46dp"
         android:layout_gravity="center"
         android:layout_margin="3dp"
-        android:background="@drawable/text_area_insc"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
+
         android:paddingRight="15dp">
 
         <EditText
@@ -69,20 +68,21 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/enter_password"
-            android:textScaleX="1.2"
+
+            android:textSize="14dp"
             android:inputType="textPassword" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_log_in"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:background="@drawable/bouton_insc"
         android:text="@string/log_in_btn"
-        android:textScaleX="1.2"
-        android:textColor="#FFFFFF">
+        android:textColor="#FFFFFF"
+        android:textSize="14dp">
 
     </androidx.appcompat.widget.AppCompatButton>
 
@@ -91,7 +91,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textScaleX="1.2"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/forgot_password"
@@ -101,9 +100,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textScaleX="1.2"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+
         android:text="@string/social_media_signIn"
         android:textColor="@color/colorPrimary"/>
 

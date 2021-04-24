@@ -28,12 +28,30 @@
             android:layout_marginBottom="5dp">
 
 
-            <ImageView
+           <!-- <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/chaise"
                 />
+                -->
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager_product"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                >
+
+            </androidx.viewpager.widget.ViewPager>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMaxWidth="10dp" />
         </androidx.cardview.widget.CardView>
 
 

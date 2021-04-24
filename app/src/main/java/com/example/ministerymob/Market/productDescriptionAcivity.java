@@ -25,14 +25,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 
+import com.example.ministerymob.Fav.Enregistrement;
+import com.example.ministerymob.MainScreen.ImageFirstScreen;
+import com.example.ministerymob.MainScreen.ImageViewPager;
 import com.example.ministerymob.MainScreen.MainActivity;
+import com.example.ministerymob.MainScreen.MyPagerAdapter;
 import com.example.ministerymob.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 public class productDescriptionAcivity extends AppCompatActivity {
@@ -50,8 +69,18 @@ public class productDescriptionAcivity extends AppCompatActivity {
     private LinearLayout desc_audio;
     private LinearLayout signaler;
     private Button appeler;
+    public Enregistrement enrg;
     protected int MY_PERMISSIONS_REQUEST_CALL_PHONE=0;
     protected int MY_PERMISSIONS_REQUEST_SEND_SMS=1;
+    public FirebaseFirestore db = FirebaseFirestore.getInstance ();
+    public CollectionReference notebookRef = db.collection ( "Favorites" );
+    private ImageFirstScreen FIRST ;
+    private ImageFirstScreen Second ;
+    private ImageFirstScreen THIRD ;
+    private  ImageFirstScreen[] images;
+    private ViewPager mMyViewPager;
+    private TabLayout mTabLayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,17 +92,53 @@ public class productDescriptionAcivity extends AppCompatActivity {
         desc_audio = findViewById ( R.id.click_audio_description );
         signaler = findViewById ( R.id.click_signaler );
 
-        img = (ImageView) findViewById ( R.id.img_product );
+       // img = (ImageView) findViewById ( R.id.img_product );
         fav = findViewById ( R.id.click_fav );
         appeler = findViewById ( R.id.appeler );
         appeler.setBackgroundResource ( R.drawable.bouton_demander );
-        // Recieve data
+
+        mTabLayout = findViewById(R.id.tab_layout_product);
+        mMyViewPager = findViewById(R.id.view_pager_product);
+
+
+        FIRST= new ImageFirstScreen ( R.drawable.image_acceuil0 );
+        Second= new ImageFirstScreen ( R.drawable.image_acceuil1 );
+        THIRD= new ImageFirstScreen ( R.drawable.image_acceuil2 );
+        images = new ImageFirstScreen[]{FIRST, Second, THIRD};
+        init();
+        /****************Recieve data *********************/
+
         Intent intent = getIntent ();
         String name = intent.getExtras ().getString ( "name" );
         String Description = intent.getExtras ().getString ( "Description" );
+        String adrsI = intent.getExtras ().getString ( "adrsI" );
+        String nomUser = intent.getExtras ().getString ( "nomUser" );
+        String emailUser = intent.getExtras ().getString ( "emailUser" );
+        Long numTel = intent.getExtras ().getLong ( "numTel" );
+        String date = intent.getExtras ().getString ( "date" );
+        String type = intent.getExtras ().getString ( "type" );
+        String prix = intent.getExtras ().getString ( "prix" );
+        String latitude = intent.getExtras ().getString ( "latitude" );
+        String longitude = intent.getExtras ().getString ( "longitude" );
+
         String image = intent.getExtras ().getString ( "img" );
 
-        img.setImageResource ( getResources ().getIdentifier ( image, "drawable", this.getPackageName () ) );
+        product p =new product (  );
+        p.setAdresse ( new Adresse ( latitude,longitude ) );
+        p.setAdresseInput ( adrsI );
+        p.setName ( name );
+        p.setDescription ( Description );
+        p.setNomUser ( nomUser );
+        p.setEmailUser ( emailUser );
+        p.setNumTel ( numTel );
+        p.setDate_creation ( date );
+        p.setType ( type );
+        p.setPrice ( prix );
+        /********todo add image ********/
+     //   p.setImg (  );
+
+
+//        img.setImageResource ( getResources ().getIdentifier ( image, "drawable", this.getPackageName () ) );
 
         adresse.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -112,16 +177,48 @@ public class productDescriptionAcivity extends AppCompatActivity {
                     checked = true;
 
                     /**********************
-                     * TODO adding it to favotites table/collection
+                     *
+                     * TODO (DONE)  adding it to favotites table/collection
                      */
+
+                    // enregistrer date
+                    Date Year = Calendar.getInstance().getTime ();
+                    DateFormat dateFormat = new SimpleDateFormat ( "yyyy/MM/dd HH:mm" );
+
+                    String strDate = dateFormat.format ( Year );
+
+                    // todo set the user's id
+                   //  enrg.setIdEnregistreur (  Objects.requireNonNull ( FirebaseAuth.getInstance ().getCurrentUser () ).getUid() );
+                     enrg =new Enregistrement ( p,strDate );
+                    DocumentReference doc=notebookRef.document ();
+                    String id= doc.getId ();
+                    enrg.setIdEnreg ( id );
+                    doc.set ( enrg );
+
+
+
                 }
 
                 if (!isChecked) {
                     fav.setBackgroundResource ( R.drawable.bouton_favorit_grand_des );
                     checked = false;
                     /**********************
-                     * TODO removing it from favotites table/collection
+                     * TODO (DONE) removing it from favotites table/collection
                      */
+                    notebookRef.document (enrg.getIdEnreg ())
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void> () {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("fav", "DocumentSnapshot successfully deleted!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener () {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("fav", "Error deleting document", e);
+                                }
+                            });
                 }
 
             }
@@ -343,6 +440,17 @@ public class productDescriptionAcivity extends AppCompatActivity {
     }
 
 
+    private void init(){
+        ArrayList<Fragment> fragments = new ArrayList<> ();
+        ImageFirstScreen[] hats = images;
+        for(ImageFirstScreen hat: hats){
+            ImageViewPager fragment = ImageViewPager.getInstance(hat);
+            fragments.add(fragment);
+        }
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), fragments);
+        mMyViewPager.setAdapter(pagerAdapter);
+        mTabLayout.setupWithViewPager(mMyViewPager, true);
+    }
 
 
 
