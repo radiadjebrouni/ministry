@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context="com.example.ministerymob.MainScreen.MainActivity">
+    tools:context="com.example.ministery.MainScreen.MainActivity">
 
 
     <LinearLayout

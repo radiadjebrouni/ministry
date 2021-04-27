@@ -83,13 +83,13 @@
 
                 </LinearLayout>
                 <Button
-                    android:id="@+id/deconnecter"
+                    android:id="@+id/param_button"
                     android:layout_width="150dp"
                     android:layout_marginVertical="10dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
-                    android:text="@string/se_d_connecter"
+                    android:text="@string/param_tres"
                     android:textColor="@color/white"
                     android:textSize="12dp" />
             </LinearLayout>

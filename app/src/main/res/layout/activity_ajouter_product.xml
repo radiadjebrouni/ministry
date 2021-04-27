@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ministerymob.Market.AjouterProductActivity">
+    tools:context="com.example.ministery.Market.AjouterProductActivity">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -37,14 +37,14 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-              <!--  <ImageView
+               <ImageView
                     android:id="@+id/img_product"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:src="@drawable/ic_image_black_24dp"
                     />
--->
-                <androidx.viewpager.widget.ViewPager
+
+             <!--   <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager_Aproduct"
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
@@ -59,7 +59,18 @@
                     app:tabIndicatorHeight="0dp"
                     app:tabMaxWidth="10dp" />
 
+-->
 
+                    <Button
+                        android:id="@+id/entrer_photo"
+                        android:layout_width="wrap_content"
+                        android:textSize="12dp"
+                        app:backgroundTint="@color/colorText"
+
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="40dp"
+
+                        android:text="@string/entrer_une_photo"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -160,7 +171,7 @@
 
                         android:layout_marginVertical="10dp"
                         android:hint="@string/entrer_l_adresse"
-                        android:inputType="phone"
+
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
@@ -179,6 +190,18 @@
                         android:textSize="12dp"
 
                         android:text="@string/entrer_adresse" />
+
+                    <TextView
+                        android:id="@+id/adr_gps"
+                        android:layout_width="match_parent"
+                        app:backgroundTint="@color/colorText"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="12dp"
+                         android:hint="Adresse GPS"/>
+
                     <Button
                         android:id="@+id/confirmer_ajout"
                         android:layout_width="wrap_content"

@@ -80,6 +80,19 @@
         <item>Handicap Psychique</item>
 
     </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="localisation_errur_dialog">Votre appareil ne permet pas d\'avoir votre localisation, veillez vérifier vos parametres et réessayer de nouveau</string>
+    <string name="modifier_la_langue">Modifier la langue</string>
+    <string name="d_tails">Détails</string>
+    <string name="modifier_le_nom_d_utilisateur">Modifier le nom d\'utilisateur</string>
+    <string name="cette_fonctionnalit_sera_disponible_prochainement">Cette fonctionnalité sera disponible prochainement</string>
+    <string name="entrer_le_nouveau_nom">Entrer le nouveau nom</string>
+    <string name="param_tres">Paramètres</string>
+    <string name="signal_detectes">Signal détéctés</string>
+    <string name="signal_msg">Un de vos article a été supprimer à cause du nombre de signals recus</string>
+    <string name="date_de_cr_ation">Date de création</string>
+    <string name="date_d_enregistrement">Date d\'enregistrement</string>
+    <string name="supp_compte">Supprimer votre compte</string>
 
 
 </resources>
