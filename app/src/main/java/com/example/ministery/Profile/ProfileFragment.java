@@ -50,7 +50,7 @@ import java.util.List;
 import static com.example.ministery.Profile.App.CHANNEL_1_ID;
 
 public class ProfileFragment extends Fragment {
-    private static ArrayList<product> MyProducts = new ArrayList<> (  );
+    private static ArrayList<product> MyProducts;
     Adresse a= new Adresse ("latitude","emptitude");
     private Button param;
     private AppCompatTextView nom;
@@ -78,6 +78,7 @@ public class ProfileFragment extends Fragment {
         param=view.findViewById ( R.id.param_button );
         param.setBackgroundResource ( R.drawable.bouton_commencer );
 
+        MyProducts = new ArrayList<> (  );
 
 
         Log.i ( "proo", auth.getCurrentUser ().getUid () + "" );
@@ -104,20 +105,6 @@ public class ProfileFragment extends Fragment {
         } );
 
 
-
-        /**************test if there are a deleted article bcs of signals and notify the user*********/
-
-
-        /**todo check if he has a signaled (+5) product to notefy him**/
-
-        if(u.isHasSignaledProduct ()){
-
-
-            //send notif
-            notificationManager = NotificationManagerCompat.from(getActivity ().getApplicationContext ());
-            sendOnChannel ( view );
-        }
-
         /************************
          *
          * TODO (DONE)
@@ -130,9 +117,23 @@ public class ProfileFragment extends Fragment {
             public void onSuccess(QuerySnapshot querySnapshot) {
                 Log.i("myarticl","success");
                 for (DocumentSnapshot d : querySnapshot){
-                    MyProducts.add ( d.toObject ( product.class ) );
-                    Log.i("myarticl","success "+ d.toObject ( product.class ).getName ());
 
+                    /****todo check the number of signals***/
+                    if(d.toObject ( product.class ) .getNbSignal ()>=10){
+                        //delete the article
+                        //send notif
+                        notificationManager = NotificationManagerCompat.from(getActivity ().getApplicationContext ());
+                        sendOnChannel ( view );
+
+                        //delete the article
+                        UserHelper.deleteArticleFromUser ( auth.getCurrentUser ().getUid (),d.toObject ( product.class ) .getIdd () );
+
+                    }
+
+                    else {
+                        MyProducts.add ( d.toObject ( product.class ) );
+                        Log.i ( "myarticl", "success " + d.toObject ( product.class ).getName () );
+                    }
                 }
                 MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,null  ));
 

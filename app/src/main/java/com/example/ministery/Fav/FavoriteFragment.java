@@ -211,6 +211,8 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
         {
 
             //todo get all the user's saves , putting them into list_enreg
+
+            setupAdapter ( view);
         }
 
         else {
@@ -220,9 +222,7 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
             /******************************************
              * todo  (DONE )get enregesitrements which has date d'enregistrement = strDate, putting them into list_enreg
              */
-
-            setupAdapter ( view);
-
+            setupAdapterDate ( view,strDat );
         }
 
        /* Adresse a= new Adresse ("latitude","emptitude");
@@ -239,6 +239,8 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
 
     /**************Firebase***************/
 
+
+
     private void setupAdapter(View view)
     {
         FirebaseAuth auth= FirebaseAuth.getInstance ();
@@ -254,10 +256,56 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
 
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Enregistrement p = documentSnapshot.toObject(Enregistrement.class);
-                         //   p.setIdd (documentSnapshot.getId());
-                          //  Enregistrement pr=new Enregistrement (p);
+                            //   p.setIdd (documentSnapshot.getId());
+                            //  Enregistrement pr=new Enregistrement (p);
 
                             if( !list_enreg.contains ( p ))
+                                list_enreg.add ( p );
+
+
+                        }
+                        Adresse a = new Adresse ( "latitude", "emptitude" );
+//                Log.i ( "lissss"," "+listeProduct.size () );
+                        myrv = (RecyclerView) view.findViewById ( R.id.fav_recycleview );
+
+                        if(list_enreg!=null ) {
+
+                            myAdapter = new RecyclerViewAdapter (  view.getContext (), list_enreg);
+                            myrv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
+                            myrv.setHasFixedSize ( true );
+                            myAdapter.notifyDataSetChanged ();
+                            myrv.setAdapter ( myAdapter );
+                        }
+
+
+                    }
+                }).addOnFailureListener ( new OnFailureListener () {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("prodd",e.getMessage ());
+            }
+        } );
+    }
+    private void setupAdapterDate(View view,String date)
+    {
+        FirebaseAuth auth= FirebaseAuth.getInstance ();
+        String uid =auth.getCurrentUser ().getUid ();
+        notebookRef = db.collection("users").document (uid).collection ( "favorit_articles" );
+        list_enreg=new ArrayList<> (  );
+        notebookRef.get ()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.i("prodd","sucees");
+
+
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Enregistrement p = documentSnapshot.toObject(Enregistrement.class);
+                            //   p.setIdd (documentSnapshot.getId());
+                            //  Enregistrement pr=new Enregistrement (p);
+
+                            assert p != null;
+                            if( !list_enreg.contains ( p ) && p.getDateEnregistrement ().contains ( date ))
                                 list_enreg.add ( p );
 
 

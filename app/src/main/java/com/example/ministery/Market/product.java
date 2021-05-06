@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.firebase.firestore.Exclude;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class product implements Serializable {
 
@@ -17,7 +18,9 @@ public class product implements Serializable {
     private String idd;
     private String date_creation;
     private String adresseInput;
+    private ArrayList<String> isSignaleurs=new ArrayList<> (  );
     private  int nbSignal;
+    private String idProprietaire;
 
 
     int offered =0;  // 0 if offered, 1 if needed
@@ -94,6 +97,21 @@ public class product implements Serializable {
 
     }
 
+    public String getIdProprietaire() {
+        return idProprietaire;
+    }
+
+    public void setIdProprietaire(String idProprietaire) {
+        this.idProprietaire = idProprietaire;
+    }
+
+    public ArrayList<String> getIsSignaleurs() {
+        return isSignaleurs;
+    }
+
+    public void setIsSignaleurs(ArrayList<String> isSignaleurs) {
+        this.isSignaleurs = isSignaleurs;
+    }
 
     public String getIdd() {
         return idd;

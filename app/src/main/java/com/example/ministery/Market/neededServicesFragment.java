@@ -268,11 +268,6 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart ();
-        if(myAdapter!=null)myAdapter.notifyDataSetChanged ();
-    }
 
 
     @Override

@@ -49,15 +49,66 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).update("username",newUsername);
     }
 
-    public static Task<Void> updateUserHasSignal(String uid, boolean has)
+    public static Task<Void> updateUsernSignal(String uid, String id, int nbSignal)
     {
-        return UserHelper.getUsersCollection().document(uid).update("hasSignaledProduct",has);
+        return UserHelper.getUsersCollection().document(uid).collection ( CREATED_ARTICLES_COLLECTION_NAME )
+                .document (id).update("nbSignal",nbSignal)
+                .addOnSuccessListener ( new OnSuccessListener<Void> () {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                } ).addOnFailureListener ( new OnFailureListener () {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                } );
+    }
+    public static Task<Void> updateidSignaleur(String uid, String id, ArrayList<String> ids)
+    {
+        return UserHelper.getUsersCollection().document(uid).collection ( CREATED_ARTICLES_COLLECTION_NAME )
+                .document (id).update("isSignaleurs",ids)
+                .addOnSuccessListener ( new OnSuccessListener<Void> () {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                } ).addOnFailureListener ( new OnFailureListener () {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                } );
     }
 
     public static Task<Void> updateUserNbArticlesTotal(String uid, int newNb)
     {
         return UserHelper.getUsersCollection().document(uid).update("nbrArticlesTotal",newNb);
     }
+
+    public static Task<Void> updateArtcle(String id,String uid, product p)
+    {
+        return UserHelper.getUsersCollection().document(uid).collection ( CREATED_ARTICLES_COLLECTION_NAME )
+        .document (id).set ( p ). addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // on successful completion of this process
+                        // we are displaying the toast message
+                     Log.i ( "moddd","success" );
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    // inside on failure method we are
+                    // displaying a failure message.
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i ( "moddd","fail "+e.getMessage () );
+
+                    }
+                });
+
+    }
+
 
     // -- DELETE --
     public static Task<Void> deleteUser(String uid)
@@ -101,7 +152,18 @@ public class UserHelper {
     public static Task<Void> deleteArticleFromUser(String uid, String articleId)
     {
         return UserHelper.getUsersCollection().document(uid)
-                .collection(CREATED_ARTICLES_COLLECTION_NAME).document(articleId).delete();
+                .collection(CREATED_ARTICLES_COLLECTION_NAME).document(articleId).delete()
+                .addOnSuccessListener ( new OnSuccessListener<Void> () {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                } ).addOnFailureListener ( new OnFailureListener () {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                } );
     }
 
     // -- ADDING FAVORITE ARTICLE --
@@ -117,6 +179,11 @@ public class UserHelper {
     {
         return UserHelper.getUsersCollection().document(uid)
                 .collection(FAVORIT_ARTICLES_COLLECTION_NAME).get();
+    }
+    public static Task<DocumentSnapshot> getSignaleursFromProduct(String uid, String id)
+    {
+        return UserHelper.getUsersCollection().document(uid)
+                .collection(CREATED_ARTICLES_COLLECTION_NAME).document (id).get();
     }
 
     // -- DELETING FAVORITE FROM USER --

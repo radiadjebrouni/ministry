@@ -36,7 +36,7 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
     private  static ArrayList<product> listeProduct ;
     private SearchView searchView;
     private RecyclerView myrv;
-    private RecyclerViewAdapter myAdapter;
+    private static RecyclerViewAdapter myAdapter;
 
     private FirebaseFirestore db;
     private CollectionReference notebookRef ;
@@ -197,6 +197,7 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
                            myrv = (RecyclerView) view.findViewById ( R.id.recyclerview_id_offer );
 
                            myAdapter = new RecyclerViewAdapter (  view.getContext (), listeProduct, false );
+
                            myrv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
                            if(listeProduct!=null ) {
                                myrv.setHasFixedSize ( true );

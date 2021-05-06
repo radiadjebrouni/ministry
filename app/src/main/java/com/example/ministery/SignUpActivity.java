@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import javax.security.auth.login.LoginException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -145,6 +147,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             passwordConfirmationEditText.requestFocus();
             return;
         }
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //creation d'un utilisateur par email et mot de passe
         auth.createUserWithEmailAndPassword(email,password)
@@ -153,18 +156,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) //si la création est réussite
                         {
-                            currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            assert currentUser != null;
                             if(currentUser.isEmailVerified()) //if the email is verified
                             {
                                 //upload profile infos
                                 //todo when the classes are ready
                                 Toast.makeText(SignUpActivity.this, "User created", Toast.LENGTH_LONG).show();
+
+                                User u =new User(auth.getCurrentUser ().getUid (),nameEditText.getText ().toString (),email);
+                                uh.insertUser ( u );
                                 Intent i = new Intent ( SignUpActivity.this,MenuActivity.class );
                                 startActivity (i);
                                 overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
 
-                                User u =new User(auth.getCurrentUser ().getUid (),name,email);
-                                uh.insertUser ( u );
 
                             }
                             else
@@ -181,6 +185,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
+
+
     }
 
     private void googleSignIn()
@@ -226,7 +232,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             User u =new User(currentUser.getUid (),currentUser.getDisplayName (),currentUser.getEmail ());
                             uh.insertUser ( u );
                             Toast.makeText(SignUpActivity.this,"Sign in success"+ currentUser.toString(), Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent ( SignUpActivity.this,LogInActivity.class );
+                            Intent i = new Intent ( SignUpActivity.this, LogInActivity.class );
                             startActivity (i);
                             overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
 

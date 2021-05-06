@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>  implements Filterable {
@@ -47,12 +51,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext ;
     private List<Enregistrement> list_enreg =null;
     public static  int filterType =0;
-    private static List<product> mData ;
+    private static  boolean eng ;
+    public static List<product> mData = new ArrayList<> (  );
     private FirebaseFirestore db = FirebaseFirestore.getInstance ();
     private CollectionReference notebookRef ;
-  //  private List<product> mData2 ;
+    private static List<product> mData2 = null;
     private FirebaseAuth auth=FirebaseAuth.getInstance ();
-    private static List<product> mDataFull ; //we need it while searvhing or filtering
+    public   static    List<product> mDataFull ; //we need it while searvhing or filtering
     private boolean  myProducts=false ; //if we are on the profile fragment or the market pour afficher les bouttons du modification
 
 
@@ -61,23 +66,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         this.mContext = mContext;
         this.mData = mData;
+        this.eng=false;
     }
 
     public RecyclerViewAdapter(Context mContext, List<product> mData,boolean myp) {
         this.mContext = mContext;
-        this.mData=mData;
+        this.mData =mData;
         this.myProducts=myp;
-       this. mDataFull = mData;
-     //  this.mData2=mData;
+        this.mDataFull = mData;
+        this.mData2 = mData;
+        Log.i("datafull","constr "+mDataFull.size ()+" "+mData.size ());
+        this.eng=false;
+
+        //  this.mData2=mData;
     }
 
     public RecyclerViewAdapter(Context mContext , ArrayList<Enregistrement> list_enreg) {
         this.mContext = mContext;
         this.list_enreg=list_enreg;
+        this.eng=true;
+
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("datafull","oncre "+mDataFull.size ()+" "+mData.size ());
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
@@ -88,7 +101,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-         if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
+        Log.i("datafull","onbind "+mDataFull.size ()+" "+mData.size ());
+
+        if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
          {
              if (!myProducts) // verifier si on est dans le profil pour afficher modif et delete icon
              {
@@ -107,8 +122,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                           * modefy the article
                           */
 
-                         Intent modif = new Intent ( mContext, modifierProductActivity.class );
-                         mContext.startActivity ( modif );
+                         Intent intent = new Intent ( mContext, AjouterProductActivity.class );
+                         intent.putExtra ( "modif",mData.get ( position ).getIdd () );
+
+
+                         intent.putExtra ( "name", mData.get ( position ).getName () );
+                         intent.putExtra ( "Description", mData.get ( position ).getDescription () );
+                         intent.putExtra ( "adrsI", mData.get ( position ).getAdresseInput () );
+                         intent.putExtra ( "nomUser", mData.get ( position ).getNomUser () );
+                         intent.putExtra ( "emailUser", mData.get ( position ).getEmailUser () );
+                         intent.putExtra ( "numTel", mData.get ( position ).getNumTel () );
+                         intent.putExtra ( "date", mData.get ( position ).getDate_creation () );
+                         intent.putExtra ( "type", mData.get ( position ).getType () );
+                         intent.putExtra ( "prix", mData.get ( position ).getPrice () );
+                         intent.putExtra ( "latitude", mData.get ( position ).getAdresse ().latitude );
+                         intent.putExtra ( "img", mData.get ( position ).getImg () );
+                         intent.putExtra ( "longitude", mData.get ( position ).getAdresse ().longititude );
+                         intent.putExtra ( "id", mData.get ( position ).getIdd () );
+                         intent.putExtra ( "off", mData.get ( position ).getOffered ());
+                         intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+
+                         Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
+                         mContext.startActivity ( intent );
                      }
                  } );
 
@@ -139,7 +174,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                           */
 
                                          UserHelper.deleteArticleFromUser ( auth.getCurrentUser ().getUid (),mData.get(position).getIdd () );
-                                         removeAt(position,0);
+                                         removeAt(position,1);
                                      }
                                  } );
 
@@ -155,7 +190,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
              Log.i ( "recycle",mData.get(position).getImg ()+"tt" );
           //   holder.img_thumbnail.setImageBitmap ( getImageBitmap(mData.get(position).getImg ()));
-             new DownLoadImageTask(holder.img_thumbnail).execute(mData.get(position).getImg ());
+             if(mData.get(position).getImg ()==null||mData.get(position).getImg ().equals ( "" ))
+                 holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( "ic_image_black_24dp","drawable", mContext.getPackageName ()) );
+             else new DownLoadImageTask(holder.img_thumbnail).execute(mData.get(position).getImg ());
              holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
                  @Override
                  public void onClick(View v) {
@@ -164,6 +201,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                      // passing data to the product description activity
 
+                     Log.i ( "desccccc",mData.get ( position ).getDescription ()+"" );
                      intent.putExtra ( "name", mData.get ( position ).getName () );
                      intent.putExtra ( "Description", mData.get ( position ).getDescription () );
                      intent.putExtra ( "adrsI", mData.get ( position ).getAdresseInput () );
@@ -176,6 +214,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                      intent.putExtra ( "latitude", mData.get ( position ).getAdresse ().latitude );
                      intent.putExtra ( "img", mData.get ( position ).getImg () );
                      intent.putExtra ( "longitude", mData.get ( position ).getAdresse ().longititude );
+                     Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
+                     intent.putExtra ( "off", mData.get ( position ).getOffered ());
+                     intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+                     intent.putExtra ( "id", mData.get ( position ).getIdd ());
+                     intent.putExtra ( "idp", mData.get ( position ).getIdProprietaire () );
+
+
+
+                     if(mData.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
+                         intent.putExtra ( "issign","true");
+                     else intent.putExtra ( "issign","false");
+
+
                      // start the activity
                      mContext.startActivity ( intent );
 
@@ -194,7 +245,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
              holder.name.setText ( list_enreg.get ( position ).getName () );
 //             holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( list_enreg.get ( position ).getImg (), "drawable", mContext.getPackageName () ) );
-             new DownLoadImageTask(holder.img_thumbnail).execute(list_enreg.get(position).getImg ());
+
+             if(list_enreg.get(position).getImg ()==null||list_enreg.get(position).getImg ().equals ( "" ))
+                 holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( "ic_image_black_24dp","drawable", mContext.getPackageName ()) );
+             else new DownLoadImageTask(holder.img_thumbnail).execute(list_enreg.get(position).getImg ());
 
 
              holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
@@ -217,6 +271,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                      intent.putExtra ( "longitude", list_enreg.get ( position ).getAdresse ().longititude );
                      intent.putExtra ( "date_enreg", list_enreg.get ( position ).getDateEnregistrement () );
                      intent.putExtra ( "img", list_enreg.get ( position ).getImg () );
+                     intent.putExtra ( "idp", list_enreg.get ( position ).getIdProprietaire () );
+                     if(list_enreg.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
+                         intent.putExtra ( "issign","true");
+                     else intent.putExtra ( "issign","false");
 
                      // start the activity
                      mContext.startActivity ( intent );
@@ -283,11 +341,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        if( list_enreg==null) return  mData.size ();
-        else  return list_enreg.size();
+//        Log.i ( "datafull", "item " + mDataFull.size () + " " + mData2.size () );
 
+        if (!this.eng) {
+
+         //   if (filterType != 4) {
+                return mData.size ();
+       //     } else return mData2.size ();
+        } else {
+            return list_enreg.size ();
+        }
     }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
@@ -300,6 +364,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(View itemView) {
             super ( itemView );
+
 
             name = (TextView)  itemView.findViewById ( R.id.title_id );
             img_thumbnail = (ImageView) itemView.findViewById ( R.id.img_id );
@@ -320,21 +385,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      **************************************/
     @Override
     public Filter getFilter() {
+        Log.i("datafull","getfiltr "+mDataFull.size ()+" "+mData.size ());
+
         return exampleFilter;
     }
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+           // mDataFull.clear ();
+           // mDataFull.addAll (  mData2);
+            Log.i("datafull","tag "+mDataFull.size ()+" "+mData2.size ());
+      //  filterType=4;
             Log.i ( "taaag","fnc"+ String.valueOf ( constraint ) );
             List<product> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 Log.i ( "taaag","null"+ String.valueOf ( constraint ) );
 
-                filteredList.addAll(mData);
-                Log.i ( "null",constraint.toString () );
+                filteredList.addAll(mDataFull);
+                Log.i ( "null",mDataFull.size ()+"" );
 
             } else {
 
+                Log.i("datafull","eslse "+mDataFull.size ()+" "+mData.size ());
 
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (product item : mDataFull) {
@@ -356,8 +428,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            Log.i("datafull","res "+ mDataFull.size ()+" "+mData.size ());
+
             mData.clear();
-           if(results.values!=null)
+         //  if(results.values!=null)
             mData.addAll((List) results.values);
             notifyDataSetChanged();
         }

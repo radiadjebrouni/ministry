@@ -93,6 +93,10 @@
     <string name="date_de_cr_ation">Date de création</string>
     <string name="date_d_enregistrement">Date d\'enregistrement</string>
     <string name="supp_compte">Supprimer votre compte</string>
+    <string name="remplir_tt_leschamps">vous n\'avez pas remplis tous les champs</string>
+    <string name="vous_avez_deja_signaler">Vous avez deja signaler ce produit</string>
+    <string name="signal_echoue">le signalement a échoué</string>
+    <string name="localisation_echoue">Localisation échoué</string>
 
 
 </resources>

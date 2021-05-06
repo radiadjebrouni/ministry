@@ -20,7 +20,7 @@
             android:id="@+id/img_id"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:src="@drawable/chaise"
+            android:src="@drawable/ic_image_black_24dp"
 
             android:scaleType="centerCrop" />
 

@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ministery.Fav.Enregistrement;
 import com.example.ministery.Profile.modifierProductActivity;
 import com.example.ministery.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>  implements Filterable {
+public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAdapterNeed.MyViewHolder>  implements Filterable {
 
     private Context mContext ;
     private List<Enregistrement> list_enreg =null;
-    public static  int filterType =0;
+    private static  int filterType =0;
     private static List<product> mData ;
+    private FirebaseAuth auth=FirebaseAuth.getInstance ();
     //  private List<product> mData2 ;
     private List<product> mDataFull ; //we need it while searvhing or filtering
     private boolean  myProducts=false ; //if we are on the profile fragment or the market pour afficher les bouttons du modification
@@ -56,16 +59,17 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
     }
 
     @Override
-    public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewAdapterNeed.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate( R.layout.product_item,parent,false);
-        return new RecyclerViewAdapter.MyViewHolder (view);
+        return new RecyclerViewAdapterNeed.MyViewHolder (view);
     }
 
+
     @Override
-    public void onBindViewHolder(RecyclerViewAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerViewAdapterNeed.MyViewHolder holder, final int position) {
 
         if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
         {
@@ -86,8 +90,36 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                          * modefy the article
                          */
 
-                        Intent modif = new Intent ( mContext, modifierProductActivity.class );
-                        mContext.startActivity ( modif );
+                        /***************************************
+                         *
+                         * modefy the article
+                         */
+
+                        Intent intent = new Intent ( mContext, AjouterProductActivity.class );
+                        intent.putExtra ( "modif",mData.get ( position ).getIdd () );
+
+
+                        intent.putExtra ( "name", mData.get ( position ).getName () );
+                        intent.putExtra ( "Description", mData.get ( position ).getDescription () );
+                        intent.putExtra ( "adrsI", mData.get ( position ).getAdresseInput () );
+                        intent.putExtra ( "nomUser", mData.get ( position ).getNomUser () );
+                        intent.putExtra ( "emailUser", mData.get ( position ).getEmailUser () );
+                        intent.putExtra ( "numTel", mData.get ( position ).getNumTel () );
+                        intent.putExtra ( "date", mData.get ( position ).getDate_creation () );
+                        intent.putExtra ( "type", mData.get ( position ).getType () );
+                        intent.putExtra ( "prix", mData.get ( position ).getPrice () );
+                        intent.putExtra ( "latitude", mData.get ( position ).getAdresse ().latitude );
+                        intent.putExtra ( "img", mData.get ( position ).getImg () );
+                        intent.putExtra ( "longitude", mData.get ( position ).getAdresse ().longititude );
+                        intent.putExtra ( "id", mData.get ( position ).getIdd () );
+                        intent.putExtra ( "off", mData.get ( position ).getOffered ());
+                        intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+
+
+                        Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
+
+
+                        mContext.startActivity ( intent );
                     }
                 } );
 
@@ -126,6 +158,10 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                 } );
             }
 
+            if(mData.get(position).getImg ()==null||mData.get(position).getImg ().equals ( "" ))
+                holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( "ic_image_black_24dp","drawable", mContext.getPackageName ()) );
+            else new DownLoadImageTask(holder.img_thumbnail).execute(mData.get(position).getImg ());
+
             holder.name.setText ( mData.get ( position ).getName () );
             //  holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( mData.get ( position ).getImg (), "drawable", mContext.getPackageName () ) );
             holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
@@ -134,10 +170,33 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
                     Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
 
+
                     // passing data to the product description activity
+
+                    Log.i ( "desccccc",mData.get ( position ).getDescription ()+"" );
                     intent.putExtra ( "name", mData.get ( position ).getName () );
                     intent.putExtra ( "Description", mData.get ( position ).getDescription () );
-                //    intent.putExtra ( "img", mData.get ( position ).getImg () );
+                    intent.putExtra ( "adrsI", mData.get ( position ).getAdresseInput () );
+                    intent.putExtra ( "nomUser", mData.get ( position ).getNomUser () );
+                    intent.putExtra ( "emailUser", mData.get ( position ).getEmailUser () );
+                    intent.putExtra ( "numTel", mData.get ( position ).getNumTel () );
+                    intent.putExtra ( "date", mData.get ( position ).getDate_creation () );
+                    intent.putExtra ( "type", mData.get ( position ).getType () );
+                    intent.putExtra ( "prix", mData.get ( position ).getPrice () );
+                    intent.putExtra ( "latitude", mData.get ( position ).getAdresse ().latitude );
+                    intent.putExtra ( "img", mData.get ( position ).getImg () );
+                    intent.putExtra ( "longitude", mData.get ( position ).getAdresse ().longititude );
+                    intent.putExtra ( "off", mData.get ( position ).getOffered ());
+                    intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+                    intent.putExtra ( "idp", mData.get ( position ).getIdProprietaire () );
+
+                    intent.putExtra ( "id", mData.get ( position ).getIdd ());
+
+                    if(mData.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
+                        intent.putExtra ( "issign","true");
+                    else intent.putExtra ( "issign","false");
+
+
                     // start the activity
                     mContext.startActivity ( intent );
 
@@ -211,9 +270,9 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
     @Override
     public int getItemCount() {
-        if(mData==null && list_enreg!=null) return  list_enreg.size ();
-        else if(mData!=null) return mData.size();
-        else return 0;
+
+        return mData.size();
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

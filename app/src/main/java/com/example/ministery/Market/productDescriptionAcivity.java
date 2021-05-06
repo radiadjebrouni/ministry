@@ -44,10 +44,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.protobuf.StringValue;
 
@@ -67,6 +69,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
     private TextView nameu;
     private ImageView img;
     private ToggleButton fav;
+    private static boolean signal =false;
     private boolean checked = false;
 
 
@@ -157,7 +160,11 @@ public class productDescriptionAcivity extends AppCompatActivity {
         String type = intent.getExtras ().getString ( "type" );
         String prix = intent.getExtras ().getString ( "prix" );
         String latitude = intent.getExtras ().getString ( "latitude" );
+        String id = intent.getExtras ().getString ( "id" );
         String longitude = intent.getExtras ().getString ( "longitude" );
+        String idp = intent.getExtras ().getString ( "idp" );  //id proprietaire
+        int sign =intent.getExtras ().getInt ( "sign" );
+        boolean issign =intent.getExtras ().getBoolean ( "issign" );
 
         String image = intent.getExtras ().getString ( "img" );
 
@@ -172,6 +179,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
         p.setDate_creation ( date );
         p.setType ( type );
         p.setPrice ( prix );
+        p.setNbSignal ( sign );
         /********todo add image ********/
          p.setImg (image);
 
@@ -187,7 +195,9 @@ public class productDescriptionAcivity extends AppCompatActivity {
         phonep.setText ( String.valueOf ( numTel ) );
         pri.setText ( prix );
 
-        new DownLoadImageTask(img).execute(p.getImg ());
+        if(p.getImg ()==null||p.getImg ().equals ( "" ))  img.setImageResource ( getResources ().getIdentifier ( "ic_image_black_24dp","drawable", getPackageName ()) );
+
+       else  new DownLoadImageTask(img).execute(p.getImg ());
     //        img.setImageResource ( getResources ().getIdentifier ( image, "drawable", this.getPackageName () ) );
 
         adresse.setOnClickListener ( new View.OnClickListener () {
@@ -309,6 +319,46 @@ public class productDescriptionAcivity extends AppCompatActivity {
                                  * TODO checking if the user's signal number on this product is 0, else incremente the number of
                                  * the product's signals which will be deleted after a limited number of signals
                                  */
+                                if(issign ||signal)
+                                {
+                                    Toast.makeText ( productDescriptionAcivity.this, getString( R.string.vous_avez_deja_signaler), Toast.LENGTH_SHORT ).show ();
+                                }
+                                else {
+                                    // modifier le nombre de signal du produit
+                                    UserHelper.updateUsernSignal ( idp, id,sign+1);
+                                    //ajouter lid de ce user a la liste des signaleurs de ce produits
+
+
+                                   Task<DocumentSnapshot> gets=UserHelper.getSignaleursFromProduct ( idp,id );
+
+                                   gets.addOnSuccessListener ( new OnSuccessListener<DocumentSnapshot> () {
+                                       @Override
+                                       public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                           ArrayList<String> list=gets.getResult ().toObject ( product.class ).getIsSignaleurs ();
+                                           list.add ( auth.getCurrentUser ().getUid ()) ;
+
+                                           //update la liste
+
+                                           UserHelper.updateidSignaleur ( idp,id,list );
+                                           signal=true;
+
+
+                                       }
+                                   } )
+                                   .addOnFailureListener ( new OnFailureListener () {
+                                       @Override
+                                       public void onFailure(@NonNull Exception e) {
+                                           Toast.makeText ( productDescriptionAcivity.this, getString( R.string.signal_echoue), Toast.LENGTH_SHORT ).show ();
+                                       }
+                                   } );
+
+
+
+
+                                }
+
+
 
                             }
                         } )

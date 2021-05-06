@@ -35,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,26 +49,45 @@ import java.util.List;
 import java.util.Objects;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
-
+    Double lat=null;
+    Double longi=null;
+    String lo;
+    String lt;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        lo= getIntent ().getExtras ().getString ( "longitude" ) ;
+        lt=getIntent ().getExtras () .getString ( "latitude" );
+
+
+
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
+
+        if(lo==null|| lt==null|| lo.equals ( "" )||lt.equals ( "" ))
+        {
+            Toast.makeText ( MapsActivity.this, getString( R.string.localisation_echoue), Toast.LENGTH_SHORT ).show ();
+
+        }
+
+        else {
+            lat = Double.valueOf ( Objects.requireNonNull ( lt ) );
+            longi = Double.valueOf ( Objects.requireNonNull ( lo ) );
+
+
         if (mLocationPermissionsGranted) {
             try {
-                Double lat = Double.parseDouble ( Objects.requireNonNull ( Objects.requireNonNull ( getIntent ().getExtras () ).getString ( "latitude" ) ) );
-                Double longi = Double.parseDouble ( Objects.requireNonNull ( getIntent ().getExtras ().getString ( "longtude" ) ) );
                 moveCamera ( new LatLng ( lat, longi ),
                         DEFAULT_ZOOM, "Map" );
-            }catch (Exception e) {
-                Toast.makeText ( this, "ce produit n'a pas d'adresse", Toast.LENGTH_SHORT ).show ();
-                getDeviceLocation();
+            } catch (Exception e) {
+                Log.i ( "mappppex", e.getMessage () + "" );
+                getDeviceLocation ();
             }
 
-
+        }
 
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -78,6 +98,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
+            mGps.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        moveCamera ( new LatLng ( lat, longi ),
+                                DEFAULT_ZOOM, "Map" );
+                    }catch (Exception e) {
+                        Toast.makeText ( MapsActivity.this, getString( R.string.localisation_echoue), Toast.LENGTH_SHORT ).show ();
+                        Log.i ( "mappppex",e.getMessage ()+"" );
+                        getDeviceLocation();
+                    }
+
+
+                }
+            });
             //init();
         }
     }

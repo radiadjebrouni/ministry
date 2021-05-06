@@ -174,6 +174,8 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
         confirmer.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View view) {
+
+
                 /***********************
                  *
                  * TODO (DONE)
@@ -183,6 +185,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                 nom = nom_service.getText ().toString ();
                 desc = description.getText ().toString ();
                 pri = prix.getText ().toString ();
+                if(!numTel.getText ().toString ().equals ( "" ))
                 num = Long.valueOf ( numTel.getText ().toString () );
                 FirebaseUser user = FirebaseAuth.getInstance ().getCurrentUser ();
                 String nomUser=user.getDisplayName ();
@@ -191,10 +194,9 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                 adrsI=adresseInput.getText ().toString ();
 
 
-                DocumentReference doc=notebookRef.document ();
-                String id= doc.getId ();
+
                 Log.i ( "imgg",img+" iii" );
-                p = new product ( nom, type, desc, pri, nomUser, emailUer, num, adresse,img,id );
+                p = new product ( nom, type, desc, pri, nomUser, emailUer, num, adresse,img,"" );
                 p.setOffered ( getIntent ().getExtras ().getInt ( "offered" ) );
 
 
@@ -204,25 +206,91 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
 
                 String strDate = dateFormat.format ( Year );
                 p.setDate_creation ( strDate );
+                p.setIdProprietaire ( auth.getCurrentUser ().getUid () );
+
                 p.setAdresseInput ( adrsI );
 
                // notebookRef.add(p);
+              Log.i ( "moddd",getIntent ().getExtras ().getString ( "modif" )+"  " );
+                if((nom.equals ("") || desc.equals ("") || pri.equals ("") ||num==null|| adrsI.equals ("")) && getIntent ().getExtras ().getString ( "modif" )==null)
+                {
+                    Toast.makeText ( AjouterProductActivity.this, getString( R.string.remplir_tt_leschamps), Toast.LENGTH_LONG ).show ();
+                }
+
+                else {if(getIntent ().getExtras ().getString ( "modif" )==null) // add new product
+                {
+                    DocumentReference doc=notebookRef.document ();
+                    String id= doc.getId ();
+
+                    Log.i ( "iddd", id );
+                    HashMap<String, product> newp = new HashMap<> ();
+                    p.setIdd ( id );
+                    newp.put ( id, p );
+                    doc.set ( p );
+
+                    /******pass data***/
+
+                    listener.apply ( db );
+
+                    finish ();
 
 
-               Log.i ( "iddd",id );
-                HashMap<String ,product>  newp= new HashMap<> (  );
-                newp.put ( id,p );
-                doc.set ( p );
+                    //url
+                }
+                else {
+                    /****************Recieve data *********************/
 
-                /******pass data***/
+                    auth = FirebaseAuth.getInstance();
+                    Intent intent = getIntent ();
+                    String name = intent.getExtras ().getString ( "name" );
+                    String Description = intent.getExtras ().getString ( "Description" );
+                    String adrsi = intent.getExtras ().getString ( "adrsI" );
+                    String nomUse = intent.getExtras ().getString ( "nomUser" );
+                    String emailUser = intent.getExtras ().getString ( "emailUser" );
+                    Long numTel = intent.getExtras ().getLong ( "numTel" );
+                    String date = intent.getExtras ().getString ( "date" );
+                    String type = intent.getExtras ().getString ( "type" );
+                    String prixx = intent.getExtras ().getString ( "prix" );
+                    String latitude = intent.getExtras ().getString ( "latitude" );
+                    String longitude = intent.getExtras ().getString ( "longitude" );
+                    String idd = intent.getExtras ().getString ( "id" );
+                    int sign = intent.getExtras ().getInt ( "sign" );
+                    int off = intent.getExtras ().getInt ( "off" );
 
-                listener.apply(db);
 
-                finish ();
+                    Log.i("moddd","id "+idd+" nom "+name+" type "+prixx);
+                    String image = intent.getExtras ().getString ( "img" );
+                    product pm=new product (  );
+                    pm.setIdd ( idd );
+                    if(p.getName ()==null||p.getName ().equals ( "" )) pm.setName ( name ); else pm.setName ( p.getName () );
+                    if(p.getDescription ()==null||p.getDescription ().equals ( "" )) pm.setDescription ( Description );else pm.setDescription ( p.getDescription () );
+                    if(p.getAdresseInput ()==null||p.getAdresseInput ().equals ( "" )) pm.setAdresseInput ( adrsi ); else pm.setAdresseInput ( p.getAdresseInput () );
+                    if(p.getNomUser ()==null||p.getNomUser ().equals ( "" )) pm.setAdresseInput ( nomUse );else pm.setNomUser ( p.getNomUser () );
+                    if(p.getNumTel ()==null) pm.setNumTel (Long.valueOf ( numTel) );else pm.setNumTel ( p.getNumTel () );
+                    if(p.getType ()==null||p.getType ().equals ( "" )) pm.setType (type );else pm.setType ( p.getType () );
+                    if(p.getPrice ()==null||p.getPrice ().equals ( "" )) pm.setPrice (prixx );else pm.setPrice ( p.getPrice () );
+                    if(p.getAdresse ()==null||p.getAdresse ().latitude.equals ( "" )) pm.setAdresse ( new Adresse ( latitude,longitude ) );
+                    else pm.setAdresse ( p.getAdresse () );
+                    pm.setNbSignal ( sign );
+                    pm.setOffered (  off  );
+                   pm.setDate_creation ( p.getDate_creation () );
+                    pm.setIdProprietaire ( auth.getCurrentUser ().getUid () );
 
 
-                //url
+                    pm.setEmailUser ( auth.getCurrentUser ().getEmail () );
 
+
+                    //modefy the product
+
+
+                    Log.i("moddd","id "+idd+" nom "+pm.getName ()+" type "+pm.getType ());
+                    DocumentReference doc=notebookRef.document (pm.getIdd ());
+                 //   UserHelper.updateArtcle ( pm.getIdd (),auth.getCurrentUser ().getUid (),pm );
+                    doc.set ( pm );
+                    finish ();
+
+                }
+                }
 
             }
         } );
@@ -332,7 +400,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                 break;
 
             /*********************
-             * todo add the image uri the new product data
+             * todo (done ) add the image uri the new product data
              */
 
         }  uploadFile();
