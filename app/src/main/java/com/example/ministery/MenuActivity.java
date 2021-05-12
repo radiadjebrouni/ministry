@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import com.example.ministery.Fav.FavoriteFragment;
 import com.example.ministery.Learn.learnFragment;
 import com.example.ministery.Market.MarketFragment;
+import com.example.ministery.Market.neededServicesFragment;
 import com.example.ministery.Profile.ProfileFragment;
+import com.example.ministery.Profile.parametreActivity;
 import com.example.ministery.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -63,4 +65,20 @@ public class MenuActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume ();
+        if(!parametreActivity.langPref)
+        {
+            parametreActivity.changeLang ( MenuActivity.this,"ar" );
+
+        }
+        else {
+            parametreActivity.changeLang ( MenuActivity.this,"fr" );
+
+
+        }
     }
+}

@@ -5,7 +5,7 @@
     android:layout_width="170dp"
     android:clickable="true"
 
-    android:layout_height="235dp"
+    android:layout_height="230dp"
     android:background="@drawable/cadre_article"
     android:outlineAmbientShadowColor="@android:color/darker_gray">
 

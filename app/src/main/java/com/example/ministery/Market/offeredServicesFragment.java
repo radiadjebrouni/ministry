@@ -52,13 +52,6 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
 
 
 
-        /*************************
-         * TODO : done
-         * Extract info from db and display it according to the selected items
-         ************************** */
-          setupAdapter ( view,db );
-
-
         /*******************
          * button ajouter
          *
@@ -266,6 +259,20 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
     @Override
     public void apply(FirebaseFirestore db) {
         setupAdapter ( getView (),db );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume ();
+
+
+
+        /*************************
+         * TODO : done
+         * Extract info from db and display it according to the selected items
+         ************************** */
+        setupAdapter ( getView (),db );
+
     }
 }
 

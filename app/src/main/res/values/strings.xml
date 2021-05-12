@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ministery</string>
+    <string name="app_name" translatable="false">ministery</string>
     <string name="sign_up">Sign up</string>
 
     <!-- Sign In and Sign up -->
@@ -60,12 +60,12 @@
     <string name="description_product">Description</string>
     <string name="adresse_produit">Adresse</string>
     <string name="nom_proprietaire">Nom</string>
-    <string name="email">Email</string>
+    <string name="email">Email :</string>
     <string name="num_t_l">Num Tél</string>
     <string name="signaler">Signaler</string>
     <string name="se_d_connecter">se déconnecter</string>
     <string name="echec_sms">Échec du SMS, veuillez réessayer plus tard</string>
-    <string name="nom_d_utilisateur">Nom d\'utilisateur</string>
+    <string name="nom_d_utilisateur">Nom :</string>
     <string name="confirmer_annulation_enregistrement">Etes vous sur de vouloir annuler l\'enregistrement de cet article?</string>
     <string name="afficher_tout">Afficher tout</string>
     <string name="liste_vide">Liste vide</string>
@@ -97,6 +97,8 @@
     <string name="vous_avez_deja_signaler">Vous avez deja signaler ce produit</string>
     <string name="signal_echoue">le signalement a échoué</string>
     <string name="localisation_echoue">Localisation échoué</string>
+    <string name="cette_liste_est_vide">Cette liste est vide</string>
+    <string name="save">save</string>
 
 
 </resources>

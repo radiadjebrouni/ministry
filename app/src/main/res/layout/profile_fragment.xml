@@ -21,79 +21,116 @@
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:textSize="28dp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:text="@string/profile"/>
 
 
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:background="@drawable/cadre_profile"
-            android:layout_width="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".60"
+         >
 
-            <LinearLayout
+
+            <RelativeLayout
+                android:id="@+id/infous"
                 android:layout_width="match_parent"
+                android:layout_marginTop="60dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="20dp"
-                android:orientation="vertical"
-                android:paddingHorizontal="10dp">
+                android:background="@drawable/cadre_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
+                    android:paddingVertical="10dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:layout_marginRight="20dp"
-                    android:text="@string/nom_d_utilisateur" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/nom_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nom_d_utilisateur" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-
-                    android:orientation="horizontal">
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="20dp"
-
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:text="@string/email" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/email_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/nom_d_utilisateur" />
-
-                </LinearLayout>
-                <Button
-                    android:id="@+id/param_button"
-                    android:layout_width="150dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
-                    android:text="@string/param_tres"
-                    android:textColor="@color/white"
-                    android:textSize="12dp" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="@string/nom_d_utilisateur"
+                            android:textColor="@android:color/black" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                            android:id="@+id/nom_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nom_d_utilisateur" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="4dp"
+
+
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginRight="10dp"
+                            android:text="@string/email"
+                            android:textColor="@android:color/black" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/email_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nom_d_utilisateur" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/param_button"
+                        android:layout_width="150dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginVertical="4dp"
+
+                        android:layout_marginTop="10dp"
+                        android:text="@string/param_tres"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/ic_account_circle_black_24dp"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="1dp"
+                app:layout_constraintBottom_toTopOf="@+id/infous"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_marginTop="5dp"
@@ -104,11 +141,19 @@
             android:textColor="@color/colorText"
             android:text="@string/mes_articles"/>
 
+        <TextView
+           android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+            android:id="@+id/avide"
+
+            android:text="@string/cette_liste_est_vide"/>
         <androidx.recyclerview.widget.RecyclerView
 
             android:id="@+id/recyclerview_profile"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".55"
 
             android:layout_centerHorizontal="true">
 

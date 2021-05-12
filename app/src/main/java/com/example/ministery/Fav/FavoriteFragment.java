@@ -57,6 +57,12 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
     private RecyclerView myrv;
     private RecyclerViewAdapter myAdapter;
 
+
+    @Override
+    public void onResume() {
+        super.onResume ();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,12 +104,14 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
         endDate.add(Calendar.YEAR, 40);
         //  start before 1 month from now
         Calendar startDate = Calendar.getInstance();
+
         startDate.add(Calendar.YEAR, -10);
         horizontalCalendar = new HorizontalCalendar.Builder(root, R.id.calender)
 
                 .datesNumberOnScreen(7)
                 .range ( startDate,endDate )
                 .defaultSelectedDate ( Date)
+
 
                 .build();
 
@@ -268,15 +276,16 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
 //                Log.i ( "lissss"," "+listeProduct.size () );
                         myrv = (RecyclerView) view.findViewById ( R.id.fav_recycleview );
 
-                        if(list_enreg!=null ) {
+                        if(list_enreg.size ()>0 ) {
 
                             myAdapter = new RecyclerViewAdapter (  view.getContext (), list_enreg);
                             myrv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
                             myrv.setHasFixedSize ( true );
                             myAdapter.notifyDataSetChanged ();
                             myrv.setAdapter ( myAdapter );
+                        }else {
+                            vide.setVisibility ( View.VISIBLE );
                         }
-
 
                     }
                 }).addOnFailureListener ( new OnFailureListener () {
@@ -285,6 +294,9 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
                 Log.i("prodd",e.getMessage ());
             }
         } );
+
+        if(list_enreg.size ()<=0)  vide.setVisibility ( View.VISIBLE );
+        else vide.setVisibility ( View.GONE );
     }
     private void setupAdapterDate(View view,String date)
     {
@@ -331,6 +343,11 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
                 Log.i("prodd",e.getMessage ());
             }
         } );
+
+        if(list_enreg.size ()<=0)  vide.setVisibility ( View.VISIBLE );
+        else vide.setVisibility ( View.GONE );
+
+
     }
 
 }

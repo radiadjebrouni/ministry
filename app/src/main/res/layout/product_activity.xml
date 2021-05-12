@@ -139,7 +139,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="10dp"
-                            android:hint="@string/date_de_cr_ation"
+                            android:hint="@string/date_d_enregistrement"
                             android:layout_marginRight="10dp"
 
                             android:textColor="@android:color/black"
@@ -300,19 +300,37 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="?android:attr/listDivider"
+                        android:backgroundTint="@color/cardview_dark_background" />
+
+
                     <TextView
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:textStyle="bold"
-
+                        android:gravity="center_horizontal"
                         android:layout_marginVertical="10dp"
                         android:text="@string/propri_taire"
 
 
                         android:textColor="@color/colorText"
                         android:textSize="21sp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_img"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_account_circle_black_24dp"
+                        app:civ_border_color="@color/colorPrimary"
+                        app:civ_border_width="1dp"
+                        android:layout_gravity="center_horizontal"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

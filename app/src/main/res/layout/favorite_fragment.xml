@@ -69,12 +69,13 @@
 
             />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/vide"
-                android:hint="@string/liste_vide"
-                android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/cette_liste_est_vide"
+            android:id="@+id/vide"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

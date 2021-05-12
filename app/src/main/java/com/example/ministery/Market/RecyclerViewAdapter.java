@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -32,7 +33,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -52,6 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Enregistrement> list_enreg =null;
     public static  int filterType =0;
     private static  boolean eng ;
+    private static boolean fav=false;
     public static List<product> mData = new ArrayList<> (  );
     private FirebaseFirestore db = FirebaseFirestore.getInstance ();
     private CollectionReference notebookRef ;
@@ -141,6 +145,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                          intent.putExtra ( "id", mData.get ( position ).getIdd () );
                          intent.putExtra ( "off", mData.get ( position ).getOffered ());
                          intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+                         intent.putExtra ( "fav", fav );
 
                          Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
                          mContext.startActivity ( intent );
@@ -199,6 +204,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                      Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
 
+
+
+
+                     /***********check if the product is in fav list******/
+
+                     FirebaseAuth auth= FirebaseAuth.getInstance ();
+                     String uid =auth.getCurrentUser ().getUid ();
+                     notebookRef = db.collection("users").document (uid).collection ( "favorit_articles" );
+                     list_enreg=new ArrayList<> (  );
+                     notebookRef.get ()
+                             .addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
+                                 @Override
+                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                     Log.i("prodd","sucees");
+
+                                      fav=false;
+                                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                         Enregistrement p = documentSnapshot.toObject(Enregistrement.class);
+                                         //   p.setIdd (documentSnapshot.getId());
+                                         //  Enregistrement pr=new Enregistrement (p);
+
+
+
+                                             if(p!=null && p.getIdd ()!=null && p.getIdd ().equals ( mData.get(position ).getIdd ()))
+                                             fav =true;
+                                     }
+
+
+                                 }
+                             }).addOnFailureListener ( new OnFailureListener () {
+                         @Override
+                         public void onFailure(@NonNull Exception e) {
+                             Log.i("prodd",e.getMessage ());
+                         }
+                     } );
+
                      // passing data to the product description activity
 
                      Log.i ( "desccccc",mData.get ( position ).getDescription ()+"" );
@@ -219,12 +260,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                      intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
                      intent.putExtra ( "id", mData.get ( position ).getIdd ());
                      intent.putExtra ( "idp", mData.get ( position ).getIdProprietaire () );
+                     intent.putExtra ( "fav", fav );
 
 
 
                      if(mData.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
-                         intent.putExtra ( "issign","true");
-                     else intent.putExtra ( "issign","false");
+                         intent.putExtra ( "issign",true);
+                     else intent.putExtra ( "issign",false );
 
 
                      // start the activity
@@ -257,6 +299,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                      Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
 
+
                      // passing data to the product description activity
                      intent.putExtra ( "name", list_enreg.get ( position ).getName () );
                      intent.putExtra ( "Description", list_enreg.get ( position ).getDescription () );
@@ -272,9 +315,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                      intent.putExtra ( "date_enreg", list_enreg.get ( position ).getDateEnregistrement () );
                      intent.putExtra ( "img", list_enreg.get ( position ).getImg () );
                      intent.putExtra ( "idp", list_enreg.get ( position ).getIdProprietaire () );
+                     intent.putExtra ( "fav", true );
                      if(list_enreg.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
-                         intent.putExtra ( "issign","true");
-                     else intent.putExtra ( "issign","false");
+                         intent.putExtra ( "issign",true);
+                     else intent.putExtra ( "issign",false);
 
                      // start the activity
                      mContext.startActivity ( intent );

@@ -21,7 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ministery.Fav.Enregistrement;
 import com.example.ministery.Profile.modifierProductActivity;
 import com.example.ministery.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +37,10 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
     private Context mContext ;
     private List<Enregistrement> list_enreg =null;
     private static  int filterType =0;
-    private static List<product> mData ;
+    private  List<product> mData ;
+    private static boolean fav=false;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance ();
+    private CollectionReference notebookRef ;
     private FirebaseAuth auth=FirebaseAuth.getInstance ();
     //  private List<product> mData2 ;
     private List<product> mDataFull ; //we need it while searvhing or filtering
@@ -115,6 +124,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                         intent.putExtra ( "off", mData.get ( position ).getOffered ());
                         intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
 
+                        intent.putExtra ( "fav", fav );
 
                         Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
 
@@ -171,6 +181,41 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                     Intent intent = new Intent ( mContext, productDescriptionAcivity.class );
 
 
+
+
+                    /***********check if the product is in fav list******/
+                   FirebaseAuth auth= FirebaseAuth.getInstance ();
+                    String uid =auth.getCurrentUser ().getUid ();
+                    notebookRef = db.collection("users").document (uid).collection ( "favorit_articles" );
+                    list_enreg=new ArrayList<> (  );
+                    notebookRef.get ()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    Log.i("prodd","sucees");
+
+                                    fav=false;
+                                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                        Enregistrement p = documentSnapshot.toObject(Enregistrement.class);
+                                        //   p.setIdd (documentSnapshot.getId());
+                                        //  Enregistrement pr=new Enregistrement (p);
+
+                                        {
+                                            if (p != null && p.getIdd () != null && p.getIdd ().equals ( mData.get ( position ).getIdd () ))
+
+                                                fav = true;
+                                        }}
+
+
+
+                                }
+                            }).addOnFailureListener ( new OnFailureListener () {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("prodd",e.getMessage ());
+                        }
+                    } );
+
                     // passing data to the product description activity
 
                     Log.i ( "desccccc",mData.get ( position ).getDescription ()+"" );
@@ -192,9 +237,11 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
                     intent.putExtra ( "id", mData.get ( position ).getIdd ());
 
+                    intent.putExtra ( "fav", fav );
+
                     if(mData.get ( position ).getIsSignaleurs ().contains ( auth.getCurrentUser ().getUid () ))
-                        intent.putExtra ( "issign","true");
-                    else intent.putExtra ( "issign","false");
+                        intent.putExtra ( "issign",true);
+                    else intent.putExtra ( "issign",false);
 
 
                     // start the activity

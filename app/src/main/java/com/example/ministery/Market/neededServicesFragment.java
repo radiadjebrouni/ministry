@@ -38,7 +38,7 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
     private  static ArrayList<product> listeProduct =new ArrayList<> (  ) ;
     private SearchView searchView;
     private RecyclerView myrv;
-    private RecyclerViewAdapterNeed myAdapter ;
+    private static RecyclerViewAdapterNeed myAdapter ;
 
     private FirebaseFirestore db;
     private CollectionReference notebookRef ;
@@ -53,11 +53,6 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
         listeProduct=new ArrayList<> (  );
 
 
-        /*************************
-         * TODO : done
-         * Extract info from db and display it according to the selected items
-         */
-       setupAdapter ( view );
 
 
 
@@ -272,6 +267,20 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void apply(FirebaseFirestore db) {
+        setupAdapter ( getView () );
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        /*************************
+         * TODO : done
+         * Extract info from db and display it according to the selected items
+         */
         setupAdapter ( getView () );
     }
 }

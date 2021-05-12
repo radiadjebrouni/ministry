@@ -1,25 +1,37 @@
 package com.example.ministery.Profile;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
@@ -29,6 +41,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ministery.Market.Adresse;
+import com.example.ministery.Market.AjouterProductActivity;
+import com.example.ministery.Market.DownLoadImageTask;
 import com.example.ministery.Market.RecyclerViewAdapter;
 import com.example.ministery.Market.product;
 import com.example.ministery.Model.User;
@@ -41,12 +55,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 import static com.example.ministery.Profile.App.CHANNEL_1_ID;
 
 public class ProfileFragment extends Fragment {
@@ -55,8 +77,11 @@ public class ProfileFragment extends Fragment {
     private Button param;
     private AppCompatTextView nom;
     private AppCompatTextView email;
+    private TextView vide;
+    private CircleImageView profilepic;
     private NotificationManagerCompat notificationManager;
 
+    private String pic;
     public static final String CHANNEL_ID = "channel_id";
     public static final String CHANNEL_NAME = "channel_name";
     public static final String NOTIFICATION_TYPE = "type_notif";
@@ -67,16 +92,34 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth= FirebaseAuth.getInstance ();
     private  static User u=new User (  );
 
+
+    private static final int REQUEST_GALLERY = 0;
+    private static final int REQUEST_CAMERA = 1;
+    private static final int MY_PERMISSIONS_REQUESTS = 0;
+    private static final int RC_HANDLE_CAMERA_PERM = 2;
+    public static Uri imageUri;
+    public static Uri imagedata;
+    public  String img="";
+    private StorageReference mStorageRef;
+
+    public FirebaseFirestore db = FirebaseFirestore.getInstance ();
+    public CollectionReference notebookRef ;
+    public CollectionReference uploads=db.collection ( "uploads" ) ;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
         View view =inflater.inflate ( R.layout.profile_fragment,container ,false);
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+
         nom=view.findViewById ( R.id.nom_user );
         email=view.findViewById ( R.id.email_user );
         param=view.findViewById ( R.id.param_button );
         param.setBackgroundResource ( R.drawable.bouton_commencer );
+        vide=view.findViewById ( R.id.avide );
+        vide.setVisibility ( View.GONE );
 
         MyProducts = new ArrayList<> (  );
 
@@ -97,6 +140,9 @@ public class ProfileFragment extends Fragment {
 
                 nom.setText ( u.getUsername () );
                 email.setText ( u.getEmail () );
+                if( u.getProfilePic ()!=null && !u.getProfilePic ().equals ( "" ))
+                    new DownLoadImageTask (profilepic).execute(u.getProfilePic ());
+
             }   }).addOnFailureListener ( new OnFailureListener () {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -137,14 +183,20 @@ public class ProfileFragment extends Fragment {
                 }
                 MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,null  ));
 
+                if(MyProducts.size ()>0){
+                    LinearLayoutManager linearLayoutManager =new LinearLayoutManager ( getContext (),LinearLayoutManager.HORIZONTAL,false );
+                    RecyclerView myrv = (RecyclerView)view. findViewById(R.id.recyclerview_profile);
+                    RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity (),MyProducts,true);
 
-                LinearLayoutManager linearLayoutManager =new LinearLayoutManager ( getContext (),LinearLayoutManager.HORIZONTAL,false );
-                RecyclerView myrv = (RecyclerView)view. findViewById(R.id.recyclerview_profile);
-                RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity (),MyProducts,true);
+                    myrv.setLayoutManager ( linearLayoutManager );
+                    myrv.setAdapter(myAdapter);
+                    myrv.setItemAnimator (new DefaultItemAnimator() );
+                }
+                else {
+                    vide.setVisibility ( View.VISIBLE );
+                }
 
-                myrv.setLayoutManager ( linearLayoutManager );
-                myrv.setAdapter(myAdapter);
-                myrv.setItemAnimator (new DefaultItemAnimator() );
+
 
             }   }).addOnFailureListener ( new OnFailureListener () {
             @Override
@@ -163,6 +215,15 @@ public class ProfileFragment extends Fragment {
         } );
 
 
+
+
+        profilepic=view.findViewById ( R.id.profile_image );
+        profilepic.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                selectImage ( view.getContext () );
+            }
+        } );
 
         return view;
     }
@@ -224,4 +285,108 @@ public class ProfileFragment extends Fragment {
 
         }
 
+    private void selectImage(final Context context) {
+        final CharSequence[] options = {"Choose from Gallery", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder ( getActivity ());
+        builder.setTitle ( "Add Photo!" );
+        builder.setItems ( options, new DialogInterface.OnClickListener () {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+               if (options[item].equals ( "Choose from Gallery" )) {
+/*
+                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                    */
+
+                    Intent intent = new Intent ();
+                    intent.setType ( "image/*" );
+                    intent.setAction ( Intent.ACTION_GET_CONTENT );
+                    startActivityForResult ( intent, REQUEST_GALLERY );
+
+                } else if (options[item].equals ( "Cancel" )) {
+                    dialog.dismiss ();
+                }
+            }
+        } );
+        builder.show ();
     }
+
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult ( requestCode, resultCode, data );
+        switch (requestCode) {
+            case REQUEST_GALLERY:
+                if (resultCode == RESULT_OK) {
+                    profilepic.setImageURI ( null );
+                    profilepic.setImageURI ( data.getData () );
+                    imagedata=data.getData ();
+                }
+                break;
+
+            /*********************
+             * todo (done ) add the image uri the new product data
+             */
+
+        }  uploadFile();
+    }
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContext ().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+    private void uploadFile() {
+        if (imagedata != null) {
+            Log.i ( "urrrr","yrrrrrrrr" );
+            StorageReference fileReference = mStorageRef.child ( System.currentTimeMillis ()
+                    + "." + getFileExtension ( imagedata ) );
+            final UploadTask uploadTask = fileReference.putFile ( imagedata );
+            uploadTask.addOnSuccessListener ( new OnSuccessListener<UploadTask.TaskSnapshot> () {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    uploadTask.continueWithTask ( new Continuation<UploadTask.TaskSnapshot, Task<Uri>> () {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful ()) {
+                                throw task.getException ();
+
+                            }
+                            // Continue with the task to get the download URL
+                            return fileReference.getDownloadUrl ();
+
+                        }
+                    } ).addOnCompleteListener ( new OnCompleteListener<Uri> () {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful ()) {
+                                img = task.getResult ().toString ();
+                                Log.i ( "loog",img+ "loo" );
+
+                                //update firstore
+
+                                UserHelper.updateUserProfilePic ( auth.getCurrentUser ().getUid (),img );
+
+
+
+                            }
+                        }
+                    } );
+
+                }
+            } ).addOnFailureListener ( new OnFailureListener () {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+
+                }
+            } );
+        }
+    }
+
+
+}
+

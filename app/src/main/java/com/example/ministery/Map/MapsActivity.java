@@ -81,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mLocationPermissionsGranted) {
             try {
                 moveCamera ( new LatLng ( lat, longi ),
-                        DEFAULT_ZOOM, "Map" );
+                        DEFAULT_ZOOM, "Localisation du produit" );
             } catch (Exception e) {
                 Log.i ( "mappppex", e.getMessage () + "" );
                 getDeviceLocation ();

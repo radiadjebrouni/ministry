@@ -59,6 +59,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class productDescriptionAcivity extends AppCompatActivity {
 
@@ -74,6 +76,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
 
 
     private static RecyclerView recyclerView;
+    private CircleImageView imgProfil;
     private LinearLayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
     private LinearLayout adresse;
@@ -110,6 +113,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.product_activity );
 
+        imgProfil=findViewById ( R.id.profile_img );
         nameu = (TextView) findViewById ( R.id.nom );
         adresse = findViewById ( R.id.click_afficher_map );
         desc_audio = findViewById ( R.id.click_audio_description );
@@ -165,6 +169,10 @@ public class productDescriptionAcivity extends AppCompatActivity {
         String idp = intent.getExtras ().getString ( "idp" );  //id proprietaire
         int sign =intent.getExtras ().getInt ( "sign" );
         boolean issign =intent.getExtras ().getBoolean ( "issign" );
+
+
+        Boolean favv =intent.getExtras ().getBoolean ( "fav" );
+
 
         String image = intent.getExtras ().getString ( "img" );
 
@@ -239,6 +247,10 @@ public class productDescriptionAcivity extends AppCompatActivity {
         /********************************
          * enregistrer le service
          *******************************/
+        if (favv) {fav.setBackgroundResource ( R.drawable.bouton_favorit_grand_actif ); checked=true;}
+        if (!favv){ fav.setBackgroundResource ( R.drawable.bouton_favorit_grand_des ); checked=false;}
+
+
 
         fav.setOnCheckedChangeListener ( new CompoundButton.OnCheckedChangeListener () {
             @Override
@@ -262,9 +274,12 @@ public class productDescriptionAcivity extends AppCompatActivity {
                    //  enrg.setIdEnregistreur (  Objects.requireNonNull ( FirebaseAuth.getInstance ().getCurrentUser () ).getUid() );
                      enrg =new Enregistrement ( p,strDate );
                     DocumentReference doc=notebookRef.document ();
-                    String id= doc.getId ();
-                     enrg.setIdEnreg ( id );
+                    String idd= doc.getId ();
+                     enrg.setIdEnreg ( idd );
+                     enrg.setIdd ( id );
                     doc.set ( enrg );
+
+
 
 
 
@@ -278,21 +293,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
                      */
 
                     UserHelper.deleteFavoriteFromUser ( auth.getCurrentUser ().getUid (), enrg.getIdEnreg () );
-                    /*notebookRef.document (enrg.getIdEnreg ())
-                            .delete()
-                            .addOnSuccessListener(new OnSuccessListener<Void> () {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("fav", "DocumentSnapshot successfully deleted!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener () {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w("fav", "Error deleting document", e);
-                                }
-                            });
-                }*/
+
                 }} });
 
         if (checked) fav.setBackgroundResource ( R.drawable.bouton_favorit_grand_actif );
@@ -424,6 +425,31 @@ public class productDescriptionAcivity extends AppCompatActivity {
 
                 builder.show ();
 
+            }
+        } );
+
+
+
+        /*****set the profile pic****/
+
+        Task<DocumentSnapshot> du = UserHelper.getUser (auth.getCurrentUser ().getUid () );
+        du.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+               User  u = du.getResult ().toObject ( User.class );
+
+                Log.i ( "proo", u.getEmail () + "" );
+                /*********************
+                 * TODO (DONE )display the users main info
+                 */
+                if( u.getProfilePic ()!=null && !u.getProfilePic ().equals ( "" ))
+                    new DownLoadImageTask (imgProfil).execute(u.getProfilePic ());
+
+            }   }).addOnFailureListener ( new OnFailureListener () {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("proo",e.getMessage ());
             }
         } );
 

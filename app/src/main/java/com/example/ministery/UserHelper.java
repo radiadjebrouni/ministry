@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.ministery.Market.product;
 import com.example.ministery.Model.Key;
 import com.example.ministery.Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -43,11 +44,26 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).get();
     }
 
+
+
     // -- UPDATE
     public static Task<Void> updateUserUsername(String uid, String newUsername)
     {
         return UserHelper.getUsersCollection().document(uid).update("username",newUsername);
     }
+
+    // -- UPDATE
+    public static Task<Void> updateUserProfilePic(String uid, String profilepic)
+    {
+        return UserHelper.getUsersCollection().document(uid).update("profilePic",profilepic)
+                .addOnCompleteListener ( new OnCompleteListener<Void> () {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                } );
+    }
+
 
     public static Task<Void> updateUsernSignal(String uid, String id, int nbSignal)
     {
