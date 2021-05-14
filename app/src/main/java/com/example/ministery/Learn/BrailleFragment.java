@@ -700,7 +700,7 @@ public class BrailleFragment extends Fragment {
                             break;
 
                         case 'ت' :case 'ة':
-                            res = getResources ().getIdentifier ( "@drawable/ac", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/cc", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
                                 alphabet.get ( a ).setImageResource ( res );
                                 alphabet.get ( a ).clearColorFilter ();
@@ -878,7 +878,7 @@ public class BrailleFragment extends Fragment {
 
                             break;
                         case 'ي': case 'ى':
-                            res = getResources ().getIdentifier ( "@drawable/zz", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/zzz", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
@@ -889,7 +889,7 @@ public class BrailleFragment extends Fragment {
                             break;
 
                         case 'و':case 'ؤ':
-                            res = getResources ().getIdentifier ( "@drawable/yy", null,getActivity (). getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/yyy", null,getActivity (). getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );

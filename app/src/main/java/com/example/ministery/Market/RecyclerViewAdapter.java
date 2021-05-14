@@ -127,7 +127,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                           */
 
                          Intent intent = new Intent ( mContext, AjouterProductActivity.class );
-                         intent.putExtra ( "modif",mData.get ( position ).getIdd () );
+                         intent.putExtra ( "modif","modif" );
 
 
                          intent.putExtra ( "name", mData.get ( position ).getName () );
@@ -145,7 +145,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                          intent.putExtra ( "id", mData.get ( position ).getIdd () );
                          intent.putExtra ( "off", mData.get ( position ).getOffered ());
                          intent.putExtra ( "sign", mData.get ( position ).getNbSignal ());
+                         intent.putExtra ( "idp", mData.get ( position ).getIdProprietaire ());
                          intent.putExtra ( "fav", fav );
+                         Log.i ( "immg", mData.get ( position ).getImg ()+" off");
 
                          Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
                          mContext.startActivity ( intent );
@@ -293,6 +295,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
              else new DownLoadImageTask(holder.img_thumbnail).execute(list_enreg.get(position).getImg ());
 
 
+             Log.i("faaaaav",list_enreg.get(position).getImg ()+"   "+list_enreg.get ( position ).getIdProprietaire ());
              holder.relativeLy.setOnClickListener ( new View.OnClickListener () {
                  @Override
                  public void onClick(View v) {

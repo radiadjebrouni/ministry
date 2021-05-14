@@ -10,20 +10,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125">
-
+        app:layout_constraintVertical_bias="0.125" >
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="0dp"
+            android:layout_weight=".16"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -39,23 +39,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top"
-                android:hint="Enter a text here (26 char max)" />
+                android:hint="@string/enter_a_text_here_26_char_max" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-
+            android:layout_height="0dp"
+            android:layout_weight=".06"
             android:orientation="horizontal">
 
             <ToggleButton
                 android:id="@+id/buttonSignTarget"
-                android:layout_marginVertical="2dp"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
+
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="2dp"
                 android:background="@android:color/transparent"
                 android:textOff="العربية"
                 android:textOn="American"
@@ -65,19 +65,21 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".55"
             android:layout_marginHorizontal="5dp"
             android:outlineSpotShadowColor="@android:color/darker_gray"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="13dp"
 
             >
-        <TableLayout
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginHorizontal="5dp">
+            <TableLayout
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="5dp">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -325,9 +327,15 @@
 
         </TableLayout>
         </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".13">
         <androidx.cardview.widget.CardView
             android:id="@+id/cardmic"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="10dp"
@@ -346,5 +354,6 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_mic_black_24dp" />
         </androidx.cardview.widget.CardView>
+    </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

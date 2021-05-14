@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">ministery</string>
+    <string name="app_name" translatable="false">Sanad</string>
     <string name="sign_up">Sign up</string>
 
     <!-- Sign In and Sign up -->

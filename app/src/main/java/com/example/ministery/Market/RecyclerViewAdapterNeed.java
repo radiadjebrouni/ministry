@@ -105,7 +105,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                          */
 
                         Intent intent = new Intent ( mContext, AjouterProductActivity.class );
-                        intent.putExtra ( "modif",mData.get ( position ).getIdd () );
+                        intent.putExtra ( "modif","modif" );
 
 
                         intent.putExtra ( "name", mData.get ( position ).getName () );
@@ -126,7 +126,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
                         intent.putExtra ( "fav", fav );
 
-                        Log.i ( "modd", mData.get ( position ).getOffered ()+" off");
+                        Log.i ( "immg", mData.get ( position ).getImg ()+" off");
 
 
                         mContext.startActivity ( intent );

@@ -267,7 +267,7 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void apply(FirebaseFirestore db) {
-        setupAdapter ( getView () );
+      //  setupAdapter ( getView () );
     }
 
 

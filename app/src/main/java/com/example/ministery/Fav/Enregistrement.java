@@ -29,7 +29,7 @@ public class Enregistrement extends product {
         this.setName ( p.getName () );
         this.setDescription ( p.getDescription () );
         this.setEmailUser ( p.getEmailUser () );
-        //this.setImg ( p.getImg () );
+        this.setImg ( p.getImg () );
         this.setNomUser ( p.getNomUser () );
         this.setNumTel ( p.getNumTel () );
         this.setPrice ( p.getPrice () );
@@ -39,6 +39,7 @@ public class Enregistrement extends product {
         this.setDate_creation ( p.getDate_creation () );
         this.setAdresseInput ( p.getAdresseInput () );
         this.setIdEnreg ( p.getIdd () );
+        this.setIdProprietaire ( p.getIdProprietaire () );
       //  this.setIdEnregistreur ( p.get );
 
     }

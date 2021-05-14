@@ -3,6 +3,7 @@ package com.example.ministery.Profile;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ministery.MainScreen.MainActivity;
 import com.example.ministery.R;
 import com.example.ministery.UserHelper;
 import com.google.firebase.auth.FirebaseAuth;
@@ -150,6 +152,13 @@ public class parametreActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         /************TODO se deconnecter *************/
+                        auth=FirebaseAuth.getInstance ();
+                        auth.signOut ();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+
                     }
                 } );
 

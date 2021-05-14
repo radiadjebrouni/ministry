@@ -3,6 +3,7 @@ package com.example.ministery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,12 +13,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ministery.MainScreen.MainActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SpashScreenActivity extends AppCompatActivity {
 
     private  static  int TIME_WAIT_SPLASH =3000;
     Animation topAnim ,bassAnim;
     ImageView image ,image2;
+    private FirebaseAuth auth=FirebaseAuth.getInstance ();
     TextView text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,18 @@ public class SpashScreenActivity extends AppCompatActivity {
                 new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent( SpashScreenActivity.this,MainActivity.class );
+                        Intent intent;
+                        if(auth.getCurrentUser ()==null || auth.getCurrentUser ().getUid ()==null ){
+                            Log.i("usss","nul");
+                            intent= new Intent( SpashScreenActivity.this,MainActivity.class );
+
+                        }
+                        else {
+                            Log.i("usss",auth.getCurrentUser ().getUid ());
+
+                            intent= new Intent( SpashScreenActivity.this,MenuActivity.class );
+
+                        }
                         startActivity(intent);
                         overridePendingTransition(R.anim.slidein_right, R.anim.slide_out_left);
 

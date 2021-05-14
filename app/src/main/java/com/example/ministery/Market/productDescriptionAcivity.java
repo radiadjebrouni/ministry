@@ -188,6 +188,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
         p.setType ( type );
         p.setPrice ( prix );
         p.setNbSignal ( sign );
+        p.setIdProprietaire ( idp );
         /********todo add image ********/
          p.setImg (image);
 
@@ -273,6 +274,8 @@ public class productDescriptionAcivity extends AppCompatActivity {
 
                    //  enrg.setIdEnregistreur (  Objects.requireNonNull ( FirebaseAuth.getInstance ().getCurrentUser () ).getUid() );
                      enrg =new Enregistrement ( p,strDate );
+                     enrg.setIdProprietaire ( p.getIdProprietaire () );
+                     enrg.setImg ( p.getImg () );
                     DocumentReference doc=notebookRef.document ();
                     String idd= doc.getId ();
                      enrg.setIdEnreg ( idd );
@@ -432,7 +435,7 @@ public class productDescriptionAcivity extends AppCompatActivity {
 
         /*****set the profile pic****/
 
-        Task<DocumentSnapshot> du = UserHelper.getUser (auth.getCurrentUser ().getUid () );
+        Task<DocumentSnapshot> du = UserHelper.getUser (p.getIdProprietaire ());
         du.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

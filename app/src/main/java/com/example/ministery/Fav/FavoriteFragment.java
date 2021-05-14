@@ -286,7 +286,8 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
                         }else {
                             vide.setVisibility ( View.VISIBLE );
                         }
-
+                        if(list_enreg.size ()<=0)  vide.setVisibility ( View.VISIBLE );
+                        else vide.setVisibility ( View.GONE );
                     }
                 }).addOnFailureListener ( new OnFailureListener () {
             @Override
@@ -316,6 +317,7 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
                             //   p.setIdd (documentSnapshot.getId());
                             //  Enregistrement pr=new Enregistrement (p);
 
+
                             assert p != null;
                             if( !list_enreg.contains ( p ) && p.getDateEnregistrement ().contains ( date ))
                                 list_enreg.add ( p );
@@ -335,6 +337,8 @@ public class FavoriteFragment extends Fragment  implements DatePickerDialog.OnDa
                             myrv.setAdapter ( myAdapter );
                         }
 
+                        if(list_enreg.size ()<=0)  vide.setVisibility ( View.VISIBLE );
+                        else vide.setVisibility ( View.GONE );
 
                     }
                 }).addOnFailureListener ( new OnFailureListener () {

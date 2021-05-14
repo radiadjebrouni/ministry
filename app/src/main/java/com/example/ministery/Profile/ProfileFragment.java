@@ -1,6 +1,7 @@
 package com.example.ministery.Profile;
 
 import android.Manifest;
+import android.app.ListActivity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -55,6 +56,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -89,7 +91,7 @@ public class ProfileFragment extends Fragment {
     /* public static String NOTIFICATION_TITLE = "notif titre" ;
      public static String NOTIFICATION_CONTENT = "notif_contenu";*/
     private Notification notification;
-    private FirebaseAuth auth= FirebaseAuth.getInstance ();
+    private FirebaseAuth auth;
     private  static User u=new User (  );
 
 
@@ -105,6 +107,11 @@ public class ProfileFragment extends Fragment {
     public FirebaseFirestore db = FirebaseFirestore.getInstance ();
     public CollectionReference notebookRef ;
     public CollectionReference uploads=db.collection ( "uploads" ) ;
+
+    private  FirebaseAuth.AuthStateListener mAuthListener;
+    private   String UserId;
+
+
 
     @Nullable
     @Override
@@ -122,17 +129,37 @@ public class ProfileFragment extends Fragment {
         vide.setVisibility ( View.GONE );
 
         MyProducts = new ArrayList<> (  );
+        auth= FirebaseAuth.getInstance ();
 
+//        Log.i ( "proo", auth.getCurrentUser ().getUid () + "" );
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                     UserId = user.getUid();
+                    Toast.makeText( getContext (), "USER ID\n"+UserId,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext (), "no id got", Toast.LENGTH_SHORT).show();
+                }
 
-        Log.i ( "proo", auth.getCurrentUser ().getUid () + "" );
+            }
+        };*/
+        String uid;
+        if(auth.getCurrentUser ()!=null
+        &&(getActivity ().getIntent ().getExtras ()==null||getActivity ().getIntent ().getExtras ().getString ( "id" )==null) ) uid=auth.getCurrentUser ().getUid ();
+        else uid=getActivity ().getIntent ().getExtras ().getString ( "id" );
 
-        Task<DocumentSnapshot> du = UserHelper.getUser (auth.getCurrentUser ().getUid () );
+        Task<DocumentSnapshot> du = UserHelper.getUser (uid );
         du.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 u = du.getResult ().toObject ( User.class );
 
+                assert u != null;
                 Log.i ( "proo", u.getEmail () + "" );
                 /*********************
                  * TODO (DONE )display the users main info
@@ -146,6 +173,7 @@ public class ProfileFragment extends Fragment {
             }   }).addOnFailureListener ( new OnFailureListener () {
             @Override
             public void onFailure(@NonNull Exception e) {
+
                 Log.i("proo",e.getMessage ());
             }
         } );
@@ -157,7 +185,7 @@ public class ProfileFragment extends Fragment {
          * Geting my products from db
          */
 
-        Task<QuerySnapshot> da = UserHelper.gerArticlesFromUser (auth.getCurrentUser ().getUid (),null );
+        Task<QuerySnapshot> da = UserHelper.gerArticlesFromUser (uid,null );
         da.addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
             @Override
             public void onSuccess(QuerySnapshot querySnapshot) {

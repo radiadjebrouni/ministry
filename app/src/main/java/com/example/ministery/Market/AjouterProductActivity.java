@@ -103,6 +103,9 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
     private static final int REQUEST_CAMERA = 1;
     private static final int MY_PERMISSIONS_REQUESTS = 0;
     private static final int RC_HANDLE_CAMERA_PERM = 2;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     public static Uri imageUri;
     public FirebaseFirestore db = FirebaseFirestore.getInstance ();
     public CollectionReference notebookRef ;
@@ -115,7 +118,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
     };
 
 
-    private Boolean mLocationPermissionsGranted = true;
+    private Boolean mLocationPermissionsGranted=false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private ImageFirstScreen FIRST ;
@@ -162,6 +165,9 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
         THIRD= new ImageFirstScreen ( R.drawable.image_acceuil2 );
         images = new ImageFirstScreen[]{FIRST, Second, THIRD};
        // init();
+
+
+
 
         entrer_photo.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -260,6 +266,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
 
                     Log.i("moddd","id "+idd+" nom "+name+" type "+prixx);
                     String image = intent.getExtras ().getString ( "img" );
+                    Log.i("immg",image+"jjj");
                     product pm=new product (  );
                     pm.setIdd ( idd );
                     if(p.getName ()==null||p.getName ().equals ( "" )) pm.setName ( name ); else pm.setName ( p.getName () );
@@ -271,6 +278,8 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                     if(p.getPrice ()==null||p.getPrice ().equals ( "" )) pm.setPrice (prixx );else pm.setPrice ( p.getPrice () );
                     if(p.getAdresse ()==null||p.getAdresse ().latitude.equals ( "" )) pm.setAdresse ( new Adresse ( latitude,longitude ) );
                     else pm.setAdresse ( p.getAdresse () );
+                    if(img==null||p.getImg ().equals ( "" )) pm.setImg ( image ); else pm.setImg ( img );
+
                     pm.setNbSignal ( sign );
                     pm.setOffered (  off  );
                    pm.setDate_creation ( p.getDate_creation () );
@@ -283,7 +292,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                     //modefy the product
 
 
-                    Log.i("moddd","id "+idd+" nom "+pm.getName ()+" type "+pm.getType ());
+                    Log.i("immgg","id "+idd+" nom "+img);
                     DocumentReference doc=notebookRef.document (pm.getIdd ());
                  //   UserHelper.updateArtcle ( pm.getIdd (),auth.getCurrentUser ().getUid (),pm );
                     doc.set ( pm );
@@ -298,7 +307,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
         entrerAdresse.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-
+                getLocationPermission();
                 showMapChoices ();
             }
         } );
@@ -346,7 +355,15 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                         values.put ( MediaStore.Images.Media.TITLE, filename );
                         values.put ( MediaStore.Images.Media.MIME_TYPE, "image/jpeg" );
 
-                        imageUri = getContentResolver ().insert ( MediaStore.Images.Media.INTERNAL_CONTENT_URI, values );
+
+                        try{
+                            imageUri = getContentResolver ().insert ( MediaStore.Images.Media.INTERNAL_CONTENT_URI, values );
+                        }catch (Exception e){
+                            Toast.makeText ( context, "Writing to internal storage is not supported", Toast.LENGTH_LONG ).show ();
+                          //  Toast.makeText ( AjouterProductActivity.this, "vous n'avez pas une carte SD,Veuillez choisir une photo dans votre gallerie", Toast.LENGTH_LONG ).show ();
+
+
+                        }
 
                         Intent intent = new Intent ();
                         intent.setAction ( MediaStore.ACTION_IMAGE_CAPTURE );
@@ -392,7 +409,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                     Log.i ( "taaaag", "uriiii" );
                     img_product.setImageURI ( null );
                     if (imageUri == null)
-                        Toast.makeText ( this, "Erreur de permission,Veuillez choisir une photo dans votre gallerie", Toast.LENGTH_LONG ).show ();
+                        Toast.makeText ( this, "Erreur de permission (vous n'avez pas une carte SD),Veuillez choisir une photo dans votre gallerie", Toast.LENGTH_LONG ).show ();
                     img_product.setImageURI ( imageUri );
                     imagedata=imageUri;
 
@@ -406,6 +423,29 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
         }  uploadFile();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionsGranted = false;
+
+        switch(requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE:{
+                if(grantResults.length > 0){
+                    for(int i = 0; i < grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                            mLocationPermissionsGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionsGranted = true;
+                    //initialize our map
+
+                }
+            }
+        }
+    }
 
     private void showMapChoices() {
 
@@ -498,7 +538,28 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
             Log.i(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
     }
+    private void getLocationPermission(){
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
 
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionsGranted = true;
+
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
     private void askCameraPermission() {
         Log.i ( "rrrrrrr", "askperm" );
 

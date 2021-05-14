@@ -455,7 +455,7 @@ public class SignFragment extends Fragment {
                             break;
 
                         case 'w'  :case'W':
-                            res = getResources ().getIdentifier ( "@drawable/w", null, getActivity ().getPackageName () );
+                            res = getResources ().getIdentifier ( "@drawable/ew", null, getActivity ().getPackageName () );
                             if (alphabet.size () > a) {
 
                                 alphabet.get ( a ).setImageResource ( res );
