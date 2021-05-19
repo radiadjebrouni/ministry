@@ -160,7 +160,7 @@ public class ProfileFragment extends Fragment {
                 u = du.getResult ().toObject ( User.class );
 
                 assert u != null;
-                Log.i ( "proo", u.getEmail () + "" );
+//                Log.i ( "proo", u.getEmail () + "" );
                 /*********************
                  * TODO (DONE )display the users main info
                  */
@@ -209,7 +209,6 @@ public class ProfileFragment extends Fragment {
                         Log.i ( "myarticl", "success " + d.toObject ( product.class ).getName () );
                     }
                 }
-                MyProducts.add ( new product ( "title","type","description","price","nom user","email user",0123l,a,null  ));
 
                 if(MyProducts.size ()>0){
                     LinearLayoutManager linearLayoutManager =new LinearLayoutManager ( getContext (),LinearLayoutManager.HORIZONTAL,false );

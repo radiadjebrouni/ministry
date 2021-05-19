@@ -1,6 +1,7 @@
 package com.example.ministery;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,11 +23,15 @@ public class SpashScreenActivity extends AppCompatActivity {
     ImageView image ,image2;
     private FirebaseAuth auth=FirebaseAuth.getInstance ();
     TextView text;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.spash_activity);
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart", true);
         topAnim = AnimationUtils.loadAnimation(this,R.anim.top_anim);
         bassAnim = AnimationUtils.loadAnimation(this,R.anim.bass_anim);
         image =findViewById(R.id.imageView2);
@@ -40,9 +45,13 @@ public class SpashScreenActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Intent intent;
-                        if(auth.getCurrentUser ()==null || auth.getCurrentUser ().getUid ()==null ){
+                        if(auth.getCurrentUser ()==null || auth.getCurrentUser ().getUid ()==null|| firstStart ){
                             Log.i("usss","nul");
                             intent= new Intent( SpashScreenActivity.this,MainActivity.class );
+                            SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean("firstStart", false);
+                            editor.apply();
 
                         }
                         else {

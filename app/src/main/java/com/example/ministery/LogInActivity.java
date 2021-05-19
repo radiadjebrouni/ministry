@@ -148,7 +148,7 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-
+                            if(auth.getCurrentUser ().isEmailVerified ()){
                             if(getIntent ().getExtras ()!=null && getIntent ().getExtras ().getString ( "name" )!=null)
                             {
                                 String name= getIntent ().getExtras ().getString ( "name" );
@@ -160,16 +160,18 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                             //get profile infos
                             //to do when the classes are ready
                             Log.i("authh",auth.getCurrentUser ().getEmail ()+"");
-                            Toast.makeText(LogInActivity.this, "LogIn success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, "LogIn success", Toast.LENGTH_LONG).show();
                             Intent i = new Intent( LogInActivity.this, MenuActivity.class );
                             i.putExtra ( "id", auth.getCurrentUser ().getUid ());
                             startActivity (i);
                             finish ();
                         }
+                        else Toast.makeText(LogInActivity.this, "Veuillez confirmer votre email", Toast.LENGTH_LONG).show();
+                        }
                         else
-                        {   Log.i("logauth",auth.getCurrentUser ().getEmail ()+"");
+                        { //  Log.i("logauth",auth.getCurrentUser ().getEmail ()+"");
 
-                            Toast.makeText(LogInActivity.this, "LogIn failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, "LogIn failed", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

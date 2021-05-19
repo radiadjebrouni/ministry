@@ -25,6 +25,7 @@ import com.example.ministery.UserHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,9 +40,8 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
     private static RecyclerViewAdapter myAdapter;
 
     private FirebaseFirestore db;
-    private CollectionReference notebookRef ;
-
-
+    private FirebaseAuth auth=FirebaseAuth.getInstance ();
+   private String nomUser;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +49,27 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
         myrv = (RecyclerView) view.findViewById ( R.id.recyclerview_id_offer );
         db = FirebaseFirestore.getInstance ();
 
+        Task<DocumentSnapshot> du = UserHelper.getUser (auth.getCurrentUser ().getUid () );
+        du.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                User u = du.getResult ().toObject ( User.class );
+
+                /*********************
+                 * TODO (DONE )display the users main info
+                 */
+
+                nomUser= u.getUsername () ;
+                Log.i ( "uuuuuus",nomUser+" jhkj" );
+
+            }   }).addOnFailureListener ( new OnFailureListener () {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.i("proo",e.getMessage ());
+            }
+        } );
 
 
         /*******************
@@ -66,6 +86,7 @@ public class offeredServicesFragment extends Fragment implements AdapterView.OnI
             public void onClick(View view) {
 
                 Intent ajoutActivity =new Intent ( getActivity (),AjouterProductActivity.class);
+                ajoutActivity.putExtra ( "nomU", nomUser);
                 ajoutActivity.putExtra ( "offered",1 );
                 getActivity ().startActivity ( ajoutActivity );
 

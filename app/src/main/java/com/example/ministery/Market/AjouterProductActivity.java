@@ -38,6 +38,7 @@ import com.example.ministery.MainScreen.ImageViewPager;
 import com.example.ministery.MainScreen.MainActivity;
 import com.example.ministery.MainScreen.MyPagerAdapter;
 import com.example.ministery.Map.MapsActivity;
+import com.example.ministery.Model.User;
 import com.example.ministery.R;
 import com.example.ministery.UserHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,6 +55,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -97,6 +99,8 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
     public String pri;
     public Long num;
     public String adrsI;
+    private  static   String nomUser;
+
 
 
     private static final int REQUEST_GALLERY = 0;
@@ -194,8 +198,9 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                 if(!numTel.getText ().toString ().equals ( "" ))
                 num = Long.valueOf ( numTel.getText ().toString () );
                 FirebaseUser user = FirebaseAuth.getInstance ().getCurrentUser ();
-                String nomUser=user.getDisplayName ();
+               // String nomUser=user.getDisplayName ();
                  String emailUer=user.getEmail ();
+
                 adresse = new Adresse ( lat, longi);
                 adrsI=adresseInput.getText ().toString ();
 
@@ -203,7 +208,14 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
 
                 Log.i ( "imgg",img+" iii" );
                 p = new product ( nom, type, desc, pri, nomUser, emailUer, num, adresse,img,"" );
+
+
+
+                p.setNomUser ( getIntent ().getExtras ().getString ( "nomU" ) );
+                Log.i ( "uuuuuus",nomUser+" setttt" );
+
                 p.setOffered ( getIntent ().getExtras ().getInt ( "offered" ) );
+
 
 
                 // add date
@@ -272,7 +284,7 @@ public class AjouterProductActivity extends AppCompatActivity implements Adapter
                     if(p.getName ()==null||p.getName ().equals ( "" )) pm.setName ( name ); else pm.setName ( p.getName () );
                     if(p.getDescription ()==null||p.getDescription ().equals ( "" )) pm.setDescription ( Description );else pm.setDescription ( p.getDescription () );
                     if(p.getAdresseInput ()==null||p.getAdresseInput ().equals ( "" )) pm.setAdresseInput ( adrsi ); else pm.setAdresseInput ( p.getAdresseInput () );
-                    if(p.getNomUser ()==null||p.getNomUser ().equals ( "" )) pm.setAdresseInput ( nomUse );else pm.setNomUser ( p.getNomUser () );
+                    if(p.getNomUser ()==null||p.getNomUser ().equals ( "" )) pm.setNomUser ( nomUse );else pm.setNomUser ( p.getNomUser () );
                     if(p.getNumTel ()==null) pm.setNumTel (Long.valueOf ( numTel) );else pm.setNumTel ( p.getNumTel () );
                     if(p.getType ()==null||p.getType ().equals ( "" )) pm.setType (type );else pm.setType ( p.getType () );
                     if(p.getPrice ()==null||p.getPrice ().equals ( "" )) pm.setPrice (prixx );else pm.setPrice ( p.getPrice () );

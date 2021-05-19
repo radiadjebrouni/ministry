@@ -59,6 +59,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
         this.mData=mData;
         this.myProducts=myp;
         this. mDataFull = mData;
+        this.list_enreg=null;
         //  this.mData2=mData;
     }
 
@@ -80,16 +81,17 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public void onBindViewHolder(RecyclerViewAdapterNeed.MyViewHolder holder, final int position) {
 
-        if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
+     /*   if(list_enreg==null ) // en est pas ds le fragmnt d'enregistrement
         {
             if (!myProducts) // verifier si on est dans le profil pour afficher modif et delete icon
             {
                 holder.modif.setVisibility ( holder.itemView.GONE );
                 holder.supp.setVisibility ( holder.itemView.GONE );
             } else {
+*/
+        holder.modif.setVisibility ( holder.itemView.GONE );
+        holder.supp.setVisibility ( holder.itemView.GONE );
 
-                holder.modif.setVisibility ( holder.itemView.VISIBLE );
-                holder.supp.setVisibility ( holder.itemView.VISIBLE );
                 holder.modif.setOnClickListener ( new View.OnClickListener () {
                     @Override
                     public void onClick(View v) {
@@ -166,7 +168,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
                     }
                 } );
-            }
+
 
             if(mData.get(position).getImg ()==null||mData.get(position).getImg ().equals ( "" ))
                 holder.img_thumbnail.setImageResource ( mContext.getResources ().getIdentifier ( "ic_image_black_24dp","drawable", mContext.getPackageName ()) );
@@ -251,9 +253,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
             } );
 
 
-        }
-
-        else {// en est dans le fragmnt d'enregistrement, afficher juste boutton delete
+       /* else {// en est dans le fragmnt d'enregistrement, afficher juste boutton delete
 
             holder.modif.setVisibility ( holder.itemView.GONE );
             holder.supp.setVisibility ( holder.itemView.VISIBLE );
@@ -283,7 +283,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
                     /***************************************
                      *
                      * deleting confirmation
-                     */
+
                     AlertDialog.Builder builder = new AlertDialog.Builder ( mContext );
                     builder.setMessage ( mContext.getString( R.string.confirmer_annulation_enregistrement) )
                             .setNegativeButton ( "Concel", new DialogInterface.OnClickListener () {
@@ -299,7 +299,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
                                     /*********************************
                                      * todo delete the article from les enregistrement du user
-                                     */
+
                                 }
                             } );
 
@@ -311,7 +311,7 @@ public class RecyclerViewAdapterNeed extends RecyclerView.Adapter<RecyclerViewAd
 
 
         }
-
+*/
     }
 
 

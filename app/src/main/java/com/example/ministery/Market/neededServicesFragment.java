@@ -26,6 +26,7 @@ import com.example.ministery.UserHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +43,8 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
 
     private FirebaseFirestore db;
     private CollectionReference notebookRef ;
+    private FirebaseAuth auth=FirebaseAuth.getInstance ();
+    private String nomUser;
 
 
 
@@ -53,6 +56,28 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
         listeProduct=new ArrayList<> (  );
 
 
+
+        Task<DocumentSnapshot> du = UserHelper.getUser (auth.getCurrentUser ().getUid () );
+        du.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                User u = du.getResult ().toObject ( User.class );
+
+                /*********************
+                 * TODO (DONE )display the users main info
+                 */
+
+                nomUser= u.getUsername () ;
+                Log.i ( "uuuuuu",nomUser+" jhkj" );
+
+            }   }).addOnFailureListener ( new OnFailureListener () {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Log.i("proo",e.getMessage ());
+            }
+        } );
 
 
 
@@ -72,6 +97,9 @@ public class neededServicesFragment extends Fragment implements AdapterView.OnIt
 
                 Intent ajoutActivity =new Intent ( getActivity (),AjouterProductActivity.class);
                 ajoutActivity.putExtra ( "offered",0 );
+                Log.i ( "uuuuuus",nomUser+" jhkj" );
+
+                ajoutActivity.putExtra ( "nomU", nomUser);
                 getActivity ().startActivity ( ajoutActivity );
             }
         } );
